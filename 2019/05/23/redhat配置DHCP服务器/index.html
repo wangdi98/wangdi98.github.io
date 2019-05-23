@@ -81,20 +81,17 @@
 
 
 
-<meta name="description" content="Windows7安装JDK的环境变量设置 Windows7 X64安装“jdk-6u26-windows-x64.exe”后，按照网上的环境变量设置方法设置了环境变量，但是死活都提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”。">
+<meta name="description" content="1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp 2.移除virbr0虚拟网卡；https://blog.csdn.net/csdn_immortal/article/details/81068259 3.配置静态ip，要与dhcp子网在同一网段； vi /etc/sysconfig/network-scri">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javac配置">
-<meta property="og:url" content="http://yoursite.com/2019/05/23/javac配置/index.html">
+<meta property="og:title" content="redhat配置DHCP服务器">
+<meta property="og:url" content="http://yoursite.com/2019/05/23/redhat配置DHCP服务器/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="Windows7安装JDK的环境变量设置 Windows7 X64安装“jdk-6u26-windows-x64.exe”后，按照网上的环境变量设置方法设置了环境变量，但是死活都提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”。">
+<meta property="og:description" content="1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp 2.移除virbr0虚拟网卡；https://blog.csdn.net/csdn_immortal/article/details/81068259 3.配置静态ip，要与dhcp子网在同一网段； vi /etc/sysconfig/network-scri">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/zjpvXuu.png">
-<meta property="og:image" content="https://i.imgur.com/pBZxVad.png">
-<meta property="og:updated_time" content="2019-05-23T09:25:15.281Z">
+<meta property="og:updated_time" content="2019-05-23T12:55:45.863Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javac配置">
-<meta name="twitter:description" content="Windows7安装JDK的环境变量设置 Windows7 X64安装“jdk-6u26-windows-x64.exe”后，按照网上的环境变量设置方法设置了环境变量，但是死活都提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”。">
-<meta name="twitter:image" content="https://i.imgur.com/zjpvXuu.png">
+<meta name="twitter:title" content="redhat配置DHCP服务器">
+<meta name="twitter:description" content="1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp 2.移除virbr0虚拟网卡；https://blog.csdn.net/csdn_immortal/article/details/81068259 3.配置静态ip，要与dhcp子网在同一网段； vi /etc/sysconfig/network-scri">
 
 
 
@@ -124,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/23/javac配置/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/23/redhat配置DHCP服务器/">
 
 
 
 
 
-  <title>javac配置 | Myblog</title>
+  <title>redhat配置DHCP服务器 | Myblog</title>
   
 
 
@@ -307,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/javac配置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/redhat配置DHCP服务器/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WD">
@@ -324,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">javac配置</h1>
+          <h1 class="post-title" itemprop="name headline">redhat配置DHCP服务器</h1>
         
 
         <div class="post-meta">
@@ -336,7 +333,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T17:03:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T20:54:00+08:00">
                 2019-05-23
               </time>
             
@@ -374,31 +371,33 @@
       
 
       
-        <p> Windows7安装JDK的环境变量设置 Windows7 X64安装“jdk-6u26-windows-x64.exe”后，按照网上的环境变量设置方法设置了环境变量，但是死活都提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”。 </p>
-<a id="more"></a>
-<hr>
-<ul>
-<li>第一步：安装jdk-6u26-windows-x64.exe，路径为默认路径，一直下一步直到完成安装。</li>
-</ul>
-<hr>
-<ul>
-<li>第二步：设置环境变量：</li>
-</ul>
-<ol>
-<li>进入环境变量设置的方法，这里只针对Windows7，其它的请童鞋们上网查找：     “计算机”右键“属性”——“高级系统设置”——“高级”——“环境变量”打开环境变量设置窗口。</li>
-<li>在下面的“系统环境变量”设置窗口中，点击“新建”，建立JAVA_HOME变量：<br>变量名：JAVA_HOME<br>变量值：C:\Program Files\Java\jdk1.6.0_26</li>
-</ol>
-<ol>
-<li>在下面的“系统环境变量”设置窗口中，点击“新建”，建立CLASSPATH变量：<br>变量名：CLASSPATH<br>变量值：C:\Program Files\Java\jdk1.6.0_26\lib\dt.jar;C:\Program Files\Java\jdk1.6.0_26\lib\tools.jar; （注意分号）</li>
-</ol>
-<ol>
-<li>在下面的“系统环境变量”设置窗口中，双击“PATH”变量，在变量值后添加：    ;C:\Program Files\Java\jdk1.6.0_26\bin; (注意分号)<br>第三步：在“运行”中输入cmd，回车后，打开命令窗口，输入javac，如果出现下图：那就说明安装配置都正确了。<img src="https://i.imgur.com/zjpvXuu.png" alt=""><br>如果出现下图：<img src="https://i.imgur.com/pBZxVad.png" alt=""><br>那很不幸，童鞋们还得继续努力，请接着往下看：<br> 安装jdk，设置好环境变量后，在cmd中输入javac命令无法使用，提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”  但是输入 java -version能正常显示jdk版本号，说明java命令可用。我输入Java -home后，发现指向的路径完全不对，环境变量设置没起作用，不知是何原因。</li>
-</ol>
-<hr>
-<p>解决方案：<br>运行——&gt;cmd<br>在控制台中运行以下命令设置java环境变量即可解决：<br>set java_home=C:\Program Files\Java\jdk1.6.0_26<br>set classpath=%JAVA_HOME%\lib\tools.jar;%JAVA_HOME%\lib\dt.jar;<br>set path=%JAVA_HOME%\bin; </p>
-<hr>
-<p>注：输入不区分大小写，另外附上几个Java命令<br>java -help  可以查看命令<br>java -home  查看JDK安装路径<br>java -version  查看JDK版本</p>
-<hr>
+        <p>1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp</p>
+<p>2.移除virbr0虚拟网卡；<br><a href="https://blog.csdn.net/csdn_immortal/article/details/81068259" target="_blank" rel="noopener">https://blog.csdn.net/csdn_immortal/article/details/81068259</a></p>
+<p>3.配置静态ip，要与dhcp子网在同一网段；</p>
+<pre><code>vi /etc/sysconfig/network-scripts/ifcfg-ethxxxx
+</code></pre><p>修改内容：</p>
+<pre><code>BOOTPROTO=static
+IPADDR=192.168.2.5
+GATEWAY=192.168.2.1
+</code></pre><p>4.配置dhcp</p>
+<pre><code>vi /etc/dhcp/dhcpd.conf
+</code></pre><p>修改后内容如下：</p>
+<pre><code>ddns-update-style interim;
+ignore client-updates;
+
+subnet 192.168.2.0 netmask 255.255.255.0 {
+
+# --- default gateway
+        option routers 192.168.2.1;
+        option subnet-mask 255.255.255.0;
+        range dynamic-bootp 192.168.2.50 192.168.2.60;
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+}                                                                  
+</code></pre><p>5.开始用service dhcpd start启动dhcp，但出现Redirecting to /bin/systemctl start  dhcpd.service;</p>
+<p>改用systemctl start dhcpd.service启动dhcp服务</p>
+<p>用systemctl status dhcpd.service查看服务状态</p>
 
       
     </div>
@@ -423,8 +422,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/python头文件/" rel="next" title="python头文件">
-                <i class="fa fa-chevron-left"></i> python头文件
+              <a href="/2019/05/23/javac配置/" rel="next" title="javac配置">
+                <i class="fa fa-chevron-left"></i> javac配置
               </a>
             
           </div>
@@ -432,10 +431,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/23/redhat配置DHCP服务器/" rel="prev" title="redhat配置DHCP服务器">
-                redhat配置DHCP服务器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
