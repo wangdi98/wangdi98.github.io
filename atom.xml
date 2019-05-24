@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-23T12:56:43.873Z</updated>
+  <updated>2019-05-24T12:31:28.758Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>-GET与-POST</title>
+    <link href="http://yoursite.com/2019/05/24/-GET%E4%B8%8E-POST/"/>
+    <id>http://yoursite.com/2019/05/24/-GET与-POST/</id>
+    <published>2019-05-24T11:29:16.793Z</published>
+    <updated>2019-05-24T12:31:28.758Z</updated>
+    
+    <content type="html"><![CDATA[<p>在 PHP 中，预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。<br><a id="more"></a></p><h2 id="GET-变量"><a href="#GET-变量" class="headerlink" title="$_GET 变量"></a>$_GET 变量</h2><p>预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。</p><p>从带有 GET 方法的表单发送的信息，对任何人都是可见的（<strong>会显示在浏览器的地址栏</strong>），并且对发送信息的量也有限制。</p><ul><li>通过 $_GET 变量来收集表单数据</li></ul><blockquote><p>在 HTML 表单中使用 method=”get” 时，所有的变量名和值都会显示在 URL 中。</p></blockquote><blockquote><p>注释：所以在发送密码或其他敏感信息时，不应该使用这个方法！</p></blockquote><blockquote><p>然而，正因为变量显示在 URL 中，因此可以在收藏夹中收藏该页面。在某些情况下，这是很有用的。</p></blockquote><blockquote><p>注释：HTTP GET 方法不适合大型的变量值。它的值是不能超过 2000 个字符的。</p></blockquote><ul><li>在URL后直接写入要传入的参数的值如：<blockquote><p><a href="http://123.206.87.240:8002/get/" target="_blank" rel="noopener">http://123.206.87.240:8002/get/</a><br><a href="http://123.206.87.240:8002/get/?what=flag" target="_blank" rel="noopener">http://123.206.87.240:8002/get/?what=flag</a></p></blockquote></li></ul><p>得到:</p><p>$what=$_GET[‘what’]; </p><p>echo $what;</p><p>if($what==’flag’)</p><p>echo ‘flag{<em>**</em>}’;</p><p>flagflag{bugku_get_su8kej2en}</p><p>##$_POST##</p><ul><li>_POST传参时，直接抓包。在数据段直接输入要传入的参数的值</li><li>注意：在写入数据时要在前面添加<blockquote><p>Content-type: application/x-www-form-urlencode(或者其他）</p></blockquote></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在 PHP 中，预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>redhat配置DHCP服务器</title>
