@@ -371,45 +371,19 @@
 
       
         
-          
-            <h2 id="弱等于-“-”"><a href="#弱等于-“-”" class="headerlink" title="弱等于 “==”"></a>弱等于 “==”</h2><ol>
+          <h2 id="弱等于-“-”"><a href="#弱等于-“-”" class="headerlink" title="弱等于 “==”"></a>弱等于 “==”</h2><ol>
 <li>== 在进行比较的时候，会先将字符串类型转化成相同，再比较。<blockquote>
-<p>如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行<br>例如：</p>
-<p>&lt;?php<br>var_dump(“admin”==0);  //true</p>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>var_dump(“1admin”==1); //true</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“admin1”==1) //false</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“admin1”==0) //true</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“0e123456”==”0e4456789”); //true </p>
-</blockquote>
-<blockquote>
-<p>?&gt; </p>
-</blockquote>
-<ul>
-<li>1 观察上述代码，”admin”==0 比较的时候，会将admin转化成数值，强制转化,由于admin是字符串，转化的结果是0自然和0相等</li>
-<li>2 “1admin”==1 比较的时候会将1admin转化成数值,结果为1，而“admin1“==1 却等于错误，也就是”admin1”被转化成了0,为什么呢？</li>
-</ul>
-<blockquote>
-<ul>
-<li>3 “0e123456”==”0e456789”相互比较的时候，会将0e这类字符串识别为科学技术法的数字，0的无论多少次方都是零，所以相等</li>
-</ul>
-</blockquote>
-<hr>
-<p>所以，当一个字符串欸当作一个数值来取值，其结果和类型如下:如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0。</p>
-
-          
+<p>如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/25/PHP弱类型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </blockquote></li></ol></div>
     
     
     
