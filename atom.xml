@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-06-04T05:12:16.557Z</updated>
+  <updated>2019-06-05T03:35:47.128Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>redhat中FTP服务器配置</title>
+    <link href="http://yoursite.com/2019/06/05/redhat%E4%B8%ADFTP%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2019/06/05/redhat中FTP服务器配置/</id>
+    <published>2019-06-05T03:12:29.017Z</published>
+    <updated>2019-06-05T03:35:47.128Z</updated>
+    
+    <content type="html"><![CDATA[<p>FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。<br>下面我将在Redhat6.5中搭建ftp服务，包括匿名用户登录，普通用户身份验证登录，黑名单，虚拟用户登录，并在win7客户端进行登录验证+</p><hr><p>1、在Linux中安装ftp软件包<br><img src="https://s1.51cto.com/images/blog/201805/16/83a70a52fa09cd771573b72f0fe722d5.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>2、开启ftp服务</p><p><img src="https://s1.51cto.com/images/blog/201805/16/8ef356597a35b67238355ca0d18c47e8.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>3、此时便可以在win7中使用匿名用户ftp进行登录，无密码，在此之前需关闭Linux防火墙和安全功能<br><img src="https://s1.51cto.com/images/blog/201805/16/760ee0b1ebbf00c9ebb4ad9ebdb4b0a9.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>4、添加zhangsan和lisi用户，并且可以身份验证访问ftp服务</p><p><img src="https://s1.51cto.com/images/blog/201805/16/c892004534713a21a7451325b5b4c711.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>此时zhangsan，lisi可正常登录ftp，但有缺点就是其可以自由游走，切换目录，安全性较低</p><p><img src="https://s1.51cto.com/images/blog/201805/16/868fadbffd5690242c52e1243c41d667.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>5、编辑ftp配置文件/etc/vsftpd/vsftpd.conf禁锢家目录使登录ftp的用户不可随意切换目录</p><p><img src="https://s1.51cto.com/images/blog/201805/16/a3462f5ac8a8dfc9115ca30c1ac4a0e9.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p><img src="https://s1.51cto.com/images/blog/201805/16/02ff76789d0796797ee4371db3ffb111.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>6、将zhangsan加入user_list文件中，user_list默认为黑名单，则zhangsan便不可登录ftp服务，lisi可正常登录</p><p><img src="https://s1.51cto.com/images/blog/201805/16/933c7a68b3b93ac341900765a08b5e9d.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p><img src="https://s1.51cto.com/images/blog/201805/16/7671dd1cf3ac3d48cee56355a7e216f0.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>若想uesr_list变为白名单，则只要在ftp配置文件末尾加入：userlist_deny=NO即可<br>7、建立lisa，tom虚拟用户账户使用ftp<br><img src="https://s1.51cto.com/images/blog/201805/16/1ba3e2684aaca68aa18e2c07c18e78ec.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p><img src="https://s1.51cto.com/images/blog/201805/16/42ddaf48c2fc0db1a43d174fce0ad88e.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>8、将vuser文件转换成数据库文件，并给vuser和转换后的vuser.db数据库文件设置权限，不让别人看见里面的信息</p><p><img src="https://s1.51cto.com/images/blog/201805/16/eb893b73cbadf68e07fd7303ac88f33b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>9、创建一个用户为vuser 指定家目录/opt/vuser 并不使用shell登陆<br><img src="https://s1.51cto.com/images/blog/201805/16/b83ae6e23233d7a7140d17ccac24a24b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>10、编辑pam认证模块支持虚拟用户的登陆，在文件中写入<br>auth required pam_userdb.so db=/etc/vsftpd/vuser<br>account required pam_userdb.so db=/etc/vsftpd/vuser</p><p><img src="https://s1.51cto.com/images/blog/201805/16/9e53056b6fd9349d7aba28be348b6e9b.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p><img src="https://s1.51cto.com/images/blog/201805/16/95d830afea6183a2dbb31eb7e56c3148.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>11、编辑ftp配置文件，开启虚拟用户，使用pam认证登陆</p><p><img src="https://s1.51cto.com/images/blog/201805/16/2e3feb9d62fe9861e991ca82a560d087.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>12、重启ftp服务：service vsftpd restart，在win7客户端使用虚拟用户进行登录<br><img src="https://s1.51cto.com/images/blog/201805/16/603e2f2f96c2e7fc3ee944a339359734.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p><p>©著作权归作者所有：来自51CTO博客作者徐星月月月的原创作品，如需转载，请注明出处，否则将追究法律责任</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。&lt;br&gt;下面我将在Re
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>基于hexo+github的博客搭建</title>
