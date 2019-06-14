@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-06-05T03:35:47.128Z</updated>
+  <updated>2019-06-14T08:05:58.850Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>misc基础</title>
+    <link href="http://yoursite.com/2019/06/14/misc%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2019/06/14/misc基础/</id>
+    <published>2019-06-14T07:57:22.294Z</published>
+    <updated>2019-06-14T08:05:58.850Z</updated>
+    
+    <content type="html"><![CDATA[<p>杂项介绍</p><p>Miscellaneous简称MISC，意思是杂项，混杂的意思。</p><p>杂项大致有几种类型：</p><p>1.隐写</p><p>2.压缩包处理</p><p>3.流量分析</p><p>4.攻击取证</p><p>5.其它</p><p><img src="https://image.3001.net/images/20190227/1551239622_5c7609c6925d3.jpg!small" alt=""></p><p>本篇主要介绍杂项基础题目的知识点以及解题思路。</p><p>0×00 文件类型识别</p><p>杂项题目主要是以文件附件作为题目，但是给的文件不一定是有后缀名的，这就需要我们识别这些文件</p><ol><li>file命令</li></ol><p>file命令实际上是一个命令行工具，用来查看文件类型。<br>使用方法：<br>将文件复制到kail或者带有file工具的系统中，使用file查看文件。</p><p><img src="https://image.3001.net/images/20190227/1551239694_5c760a0e3703e.jpg!small" alt=""></p><p>将文件后缀名补上即可正常打开。<br>然后根据实际情况进行初步判断可能是什么类型的题目。</p><ol start="2"><li>010Editor</li></ol><p>010Editor是一款快速且强大的十六进制编辑器。用来编辑二进制文件。有一个友好易于使用的界面，无限次的undo和redo操作。另外还可以打印x十六进制的字节或者以书签的方式标出某些重要的字节。我们可以通过使用010Editor查看文件的头部来判断类型。</p><p>以下是常见的文件头:</p><p><img src="https://image.3001.net/images/20190227/1551239737_5c760a3976498.jpg!small" alt=""></p><p>PNG文件头中包含IHDR信息。</p><p><img src="https://image.3001.net/images/20190227/1551247661_5c76292d888b0.jpg!small" alt=""></p><p>IHDR的作用将在后续的图片类隐写中详细讲解。</p><p>当文件类型不确定时就可以尝试查看文件头来判断。</p><p><img src="https://image.3001.net/images/20190227/1551247691_5c76294b383ff.jpg" alt=""></p><p>既然会出现没有后缀的文件，那当然也会出现缺少头部的情况，可以根据后缀名来选择文件头部进行填充，如果没有后缀名，则查看文件尾部来判断文件类型。</p><p>以下是常见的文件尾部：<br>zip文件的结尾以一串504B0506开始。</p><p><img src="https://image.3001.net/images/20190227/1551247724_5c76296cf01cf.jpg" alt=""></p><p>rar文件以C43D7B00400700结尾。</p><p><img src="https://image.3001.net/images/20190227/1551247752_5c7629882bb43.jpg!small" alt=""></p><p>JPG文件结尾为FFD9。<br><img src="https://image.3001.net/images/20190227/1551247796_5c7629b4b597f.jpg" alt=""></p><p>PNG文件 结尾为000049454E44AE426082。</p><p><img src="https://image.3001.net/images/20190227/1551247823_5c7629cf93d65.jpg" alt=""></p><p>Gif文件结尾为3B。</p><p><img src="https://image.3001.net/images/20190227/1551247855_5c7629ef5ec90.jpg!small" alt=""></p><p>0×01 文件分离</p><p>介绍了文件类型的识别方法了，接下来来讲一下文件分离<br>文件分离的原因：<br>在CTF这个充满脑洞的比赛中，出题人往往会以一些稀奇古怪的出题方式出题，因此你可以常常看见暴打出题人等字眼出现在比赛论坛中。在CTF中一个文件中隐藏着另外其他文件的题目是经常有的。这就需要掌握文件分离的技巧来应对。下面介绍几种姿势</p><ol><li>Binwalk</li></ol><p>1.1 Binwalk工具介绍<br>Binwalk是一个自动提取文件系统，该工具最大的优点就是可以自动完成指定文件的扫描，智能发掘潜藏在文件中所有可疑的文件类型及文件系统。相比于之前介绍的file命令行工具来说，file只是从文件的第一个字节开始识别，且只能把一个文件识别成一个类型的文件，很难看出是否隐藏着其他的文件，Binwalk就能很好的完成这项任务。</p><p>1.2 Binwalk文件扫描和提取<br>Binwalk分析文件<br>命令：binwalk +file 通过扫描能够发现目标文件中包含的所有可识别的文件类型。</p><p><img src="https://image.3001.net/images/20190227/1551247989_5c762a75a5eb9.jpg" alt=""></p><p>通过Binwalk我们可以看到这一张jpg文件中藏着zip文件。<br>Binwalk提取文件。<br>命令 binwalk +file -e。</p><p><img src="https://image.3001.net/images/20190227/1551248026_5c762a9a61d25.jpg!small" alt=""></p><p>“-e”和“–extract”用于按照定义的配置文件中的提取方法从固件中提取探测到的文件系统。<br>若提取成功则会生成一个_文件名_extracted的目录，目录中存放的就是提取出的文件</p><ol start="2"><li>foremost</li></ol><p>2.1 foremost工具介绍<br>foremost是基于文件开始格式，文件结束标志和内部数据结构进行恢复文件的程序。该工具通过分析不同类型文件的头、尾和内部数据结构，同镜像文件的数据进行比对，以还原文件。它默认支持19种类型文件的恢复。用户还可以通过配置文件扩展支持其他文件类型。</p><p>2.2 foremost提取文件<br>有时候binwalk无法正确分离出文件，这时候就可以使用foremost，将目标文件复制到kali中，在终端中使用命令行进入文件所在文件夹，使用如下命令：<br>Foremost+file –o 输出目录名。</p><p><img src="https://image.3001.net/images/20190227/1551248069_5c762ac523792.jpg" alt=""></p><p>执行成功后会在目标文件的文件目录下生成我们设置的目录，目录有中按照文件类型分离出文件。</p><p><img src="https://image.3001.net/images/20190227/1551248133_5c762b0522794.jpg" alt=""></p><ol start="3"><li>dd</li></ol><p>前面介绍的两种都是自动化分离工具，dd这个工具是一种半自动化工具，有的时候自动化工具不能实现文件的分离，所以需要用这个工具来进行分离。<br>使用dd命令分离文件格式如下：</p><p>dd if=源文件名 bs=1 skip=开始分离的字节数 of=目标文件名<br>参数说明：<br>if=file #输入文件名，缺省为标准输入。<br>of=file #输出文件名，缺省为标准输出。<br>bs=bytes #同时设置读写块的大小为 bytes ，可代替 ibs 和 obs 。<br>skip=blocks #从输入文件开头跳过 blocks 个块后再开始复制。<br>以IDF实验室“抓到一只苍蝇”为例，需要将获得的文件去除前364个字节：<br>dd if=s1 bs=1 skip=364 of=d1</p><p>使用dd命令分离文件格式如下：<br>dd if=源文件名 bs=1 skip=开始分离的字节数 of=目标文件名</p><p>参数说明：<br>if=file #输入文件名，缺省为标准输入。<br>of=file #输出文件名，缺省为标准输出。<br>bs=bytes #同时设置读写块的大小为 bytes ，可代替 ibs 和 obs。<br>skip=blocks #从输入文件开头跳过 blocks 个块后再开始复制。<br>若需要将获得的文件去除前364个字节：<br>dd if=s1 bs=1 skip=364 of=d1<br><img src="https://image.3001.net/images/20190227/1551248205_5c762b4d4b0fe.jpg!small" alt=""></p><ol start="4"><li>010Editor</li></ol><p>在之前文件识别中提到这个工具，手动分离文件也可以使用这个工具<br>拖动想要分离的部分。</p><p><img src="https://image.3001.net/images/20190227/1551248286_5c762b9e9e03e.jpg!small" alt=""> </p><p><img src="https://image.3001.net/images/20190227/1551248306_5c762bb24fd66.jpg!small" alt=""></p><p>右键-&gt;选择-&gt;保存选择。</p><p>然后根据需要分离的文件类型选择后缀名。</p><p><img src="https://image.3001.net/images/20190227/1551248357_5c762be5e2397.jpg!small" alt=""></p><p>在介绍了文件分离后，还需要提到的是文件合并。<br>天下之事分久必合合久必分，既然CTF有文件分离的题目，那自然也少不了文件合成的了，但是文件合成还是有技巧的。</p><ol><li>linux环境文件合并</li></ol><p>cat 是linux系统下的一个能提取文件的内容的命令，使用cat命令将文件内容提取出来再导入目标文件。使用方式如下：<br>将chapter01、chapter02、chapter03三个文件按从左到右顺序合并，输出到book文件中。<br>所使用的命令：cat chapter01 chapter02 chapter03 &gt; book<br>将所有以chapter开头的文件按文件名从小到大的顺序合并，输出到book文件中。<br>所使用的命令：cat  chapter* &gt; book </p><p><img src="https://image.3001.net/images/20190227/1551248518_5c762c86bab97.jpg!small" alt=""></p><p>但是要注意的一点是，cat是需要遵循顺序来获取文件内容的，所以在cat之前需要判断一下文件的先后顺序。</p><ol start="2"><li>windows环境文件合并</li></ol><p>linux中有cat等命令，windows环境下也有类似的命令copy，使用方式如下：<br>将chapter01、chapter02、chapter03三个文件按从左到右顺序合并，输出到book文件中。<br>所使用的命令：copy /B chapter01+chapter02+chapter03 book<br>将所有以chapter开头的文件按文件名从小到大的顺序合并，输出到book1文件中。<br>所使用的命令：copy /B  chapter* book1 </p><p><img src="https://image.3001.net/images/20190227/1551248579_5c762cc3635bf.jpg!small" alt=""></p><ol start="3"><li>Python文件合并</li></ol><p>python环境适用于linux也适用于windows，它是通过编写脚本来实现的文件合并，以之前的例子来。</p><h1 id="coding-utf8"><a href="#coding-utf8" class="headerlink" title="-- coding: utf8 --"></a>-<em>- coding: utf8 -</em>-</h1><p>def foo():<br>path=r”.\chapter%d”<br>s=””<br>for i in xrange(1,4):<br>f=open(path % i).read()<br>s+=f<br>print s<br>pass<br>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>foo()<br>print ‘ok’</p><p>0×03 总结</p><p>介绍了这么多关于CTF基础类型的文件处理方法，为了方便大家梳理，提供一个思维导图给大家来参考。</p><p><img src="https://image.3001.net/images/20190227/1551248626_5c762cf27a8e8.jpg!small" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;杂项介绍&lt;/p&gt;
+&lt;p&gt;Miscellaneous简称MISC，意思是杂项，混杂的意思。&lt;/p&gt;
+&lt;p&gt;杂项大致有几种类型：&lt;/p&gt;
+&lt;p&gt;1.隐写&lt;/p&gt;
+&lt;p&gt;2.压缩包处理&lt;/p&gt;
+&lt;p&gt;3.流量分析&lt;/p&gt;
+&lt;p&gt;4.攻击取证&lt;/p&gt;
+&lt;p&gt;5.其它&lt;/p&gt;
+&lt;p&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>redhat中FTP服务器配置</title>
