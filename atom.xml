@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-06-14T08:07:35.228Z</updated>
+  <updated>2019-07-15T12:36:29.038Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nmapp基础</title>
+    <link href="http://yoursite.com/2019/07/15/Nmap%E5%9F%BA%E7%A1%80/"/>
+    <id>http://yoursite.com/2019/07/15/Nmap基础/</id>
+    <published>2019-07-15T11:45:51.618Z</published>
+    <updated>2019-07-15T12:36:29.038Z</updated>
+    
+    <content type="html"><![CDATA[<p>date: 2019-07-15 19:45:51</p><h1 id="Nmap使用"><a href="#Nmap使用" class="headerlink" title="Nmap使用"></a>Nmap使用</h1><ul><li><p>Nmap是主机扫描工具，他的图形化界面是Zenmap，分布式框架为Dnamp。<br>Nmap可以完成以下任务：</p><p>  1.主机探测</p><p>  2.端口扫描</p><p>  3.版本检测htt</p><p>  4.系统检测</p><p>  5.支持探测脚本的编写</p><a id="more"></a></li></ul><hr><h2 id="常见的服务端口号"><a href="#常见的服务端口号" class="headerlink" title="常见的服务端口号"></a>常见的服务端口号</h2><p>HTTP    80</p><p>HTTPS    443</p><p>Telnet    23</p><p>FTP    21</p><p>SSH（安全登录）、SCP（文件传输）、端口重定向        22</p><p>SMTP    25</p><p>POP3    110</p><p>WebLogic    7001</p><p>TOMCAT    8080</p><p>WIN2003远程登录    3389</p><p>Oracle数据库    1521</p><p>MS SQL* SEVER数据库sever    1433</p><p>MySQL 数据库sever    3306</p><hr><h1 id="nmap基本使用方法"><a href="#nmap基本使用方法" class="headerlink" title="nmap基本使用方法"></a>nmap基本使用方法</h1><p>1、nmap简单扫描</p><pre><code>nmap默认发送一个ARP的PING数据包，来探测目标主机1-10000范围内所开放的所有端口命令语法：nmap &lt;target ip address&gt;其中：target ip address是扫描的目标主机的ip地址</code></pre><p>2.nmap简单扫描，并对结果返回详细的描述输出</p><pre><code>命令语法：namp -vv &lt;target ip address&gt;介绍：-vv参数设置对结果的详细输出</code></pre><p>3.nmap自定义扫描</p><pre><code>命令语法：nmap -p(range) &lt;target IP&gt;介绍：（range）为要扫描的端口范围，端口大小不能超过65535例子：扫描目标主机的1-50号端口nmap -p50-80 10.0.0.55</code></pre><p>4.nmap 指定端口扫描</p><pre><code>命令语法：nmap -p(port1,port2,…) &lt;target IP&gt;介绍：port1,port2…为想要扫描的端口号例子：扫描目标主机的80，443，801端口nmap -p80,443,801 10.0.0.55</code></pre><p>5.nmap ping 扫描</p><pre><code>nmap可以利用类似windows/linux系统下的ping 方式进行扫描命令语法： nmap -sP &lt;target ip&gt;例子：nmap sP 10.1.112.89</code></pre><p>6.nmap路由追踪</p><pre><code>路由器追踪功能，能够帮助网络管理员了解网络通行情况，同时也是网络管理人员很好的辅助工具，通过路由器追踪可以轻松的查处从我们电脑所在地到目的地之间所经常的网络节点，并可以看到通过各个结点所花费的时间命令语法： nmap –traceroute &lt;target IP&gt;例子:namp –traceroute 8.8.8.8(geogle dns服务器ip)</code></pre><p>7.nmap设置扫描一个网段下的ip</p><pre><code>命令语法： nmap -sP &lt;network address&gt; &lt;/CIDR&gt;介绍：CIDR为设置的子网掩码（/24,/16,/8等）例子：nmap -sP 10.1.1.0 /24</code></pre><p>8.nmap操作系统类型的探测</p><pre><code>命令语法： nmap -0 &lt;target IP&gt;例子：nmap -O(大写的o) 10.1.112.89</code></pre><p>9.nmap万能开关</p><pre><code>包含了1-10000端口ping扫描，操作系统扫描，脚本扫描，路由跟踪，服务探测命令语法： nmap -A &lt;target ip&gt;例子：nmap -A 10.1.112.89</code></pre><p>10.nmap命令混合式扫描</p><pre><code>可以做到类似参数-A所完成的功能，但又能细化我们的需求要求命令语法： nmap -vv -p1-100 -O &lt;target ip&gt;例子： nmap -vv -p1-100 -O 10.1.112.89</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;date: 2019-07-15 19:45:51&lt;/p&gt;
+&lt;h1 id=&quot;Nmap使用&quot;&gt;&lt;a href=&quot;#Nmap使用&quot; class=&quot;headerlink&quot; title=&quot;Nmap使用&quot;&gt;&lt;/a&gt;Nmap使用&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Nmap是主机扫描工具，他的图形化界面是Zenmap，分布式框架为Dnamp。&lt;br&gt;Nmap可以完成以下任务：&lt;/p&gt;
+&lt;p&gt;  1.主机探测&lt;/p&gt;
+&lt;p&gt;  2.端口扫描&lt;/p&gt;
+&lt;p&gt;  3.版本检测htt&lt;/p&gt;
+&lt;p&gt;  4.系统检测&lt;/p&gt;
+&lt;p&gt;  5.支持探测脚本的编写&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>misc基础</title>
@@ -185,48 +210,6 @@
 &lt;li&gt;from math import sqrt&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;是把sqrt作为本文件的方法导入进来了，使用的时候只需要直接调用sqrt。&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hello</title>
-    <link href="http://yoursite.com/2019/05/23/hello/"/>
-    <id>http://yoursite.com/2019/05/23/hello/</id>
-    <published>2019-05-23T03:17:10.000Z</published>
-    <updated>2019-05-23T03:55:06.977Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>你好</title>
-    <link href="http://yoursite.com/2018/11/11/%E4%BD%A0%E5%A5%BD/"/>
-    <id>http://yoursite.com/2018/11/11/你好/</id>
-    <published>2018-11-11T10:54:39.000Z</published>
-    <updated>2019-05-23T03:55:03.034Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title> 你好。HEXO</title>
-    <link href="http://yoursite.com/2018/11/11/%E4%BD%A0%E5%A5%BD%E3%80%82HEXO/"/>
-    <id>http://yoursite.com/2018/11/11/你好。HEXO/</id>
-    <published>2018-11-11T10:04:56.000Z</published>
-    <updated>2019-05-23T03:54:58.389Z</updated>
-    
-    <summary type="html">
     
     </summary>
     
