@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。下面我将在Redhat6.5中搭建ftp服务，包括匿名用户登录，普通用户身份验证登录，黑名单，虚拟用户登录，并在win7客户端进行登录验证+  1、">
+<meta name="description" content="FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redhat中FTP服务器配置">
 <meta property="og:url" content="http://yoursite.com/2019/06/05/redhat中FTP服务器配置/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。下面我将在Redhat6.5中搭建ftp服务，包括匿名用户登录，普通用户身份验证登录，黑名单，虚拟用户登录，并在win7客户端进行登录验证+  1、">
+<meta property="og:description" content="FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s1.51cto.com/images/blog/201805/16/83a70a52fa09cd771573b72f0fe722d5.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
 <meta property="og:image" content="https://s1.51cto.com/images/blog/201805/16/8ef356597a35b67238355ca0d18c47e8.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
@@ -105,10 +105,10 @@
 <meta property="og:image" content="https://s1.51cto.com/images/blog/201805/16/95d830afea6183a2dbb31eb7e56c3148.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
 <meta property="og:image" content="https://s1.51cto.com/images/blog/201805/16/2e3feb9d62fe9861e991ca82a560d087.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
 <meta property="og:image" content="https://s1.51cto.com/images/blog/201805/16/603e2f2f96c2e7fc3ee944a339359734.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
-<meta property="og:updated_time" content="2019-06-05T03:35:47.128Z">
+<meta property="og:updated_time" content="2019-07-15T11:17:40.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redhat中FTP服务器配置">
-<meta name="twitter:description" content="FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。下面我将在Redhat6.5中搭建ftp服务，包括匿名用户登录，普通用户身份验证登录，黑名单，虚拟用户登录，并在win7客户端进行登录验证+  1、">
+<meta name="twitter:description" content="FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。">
 <meta name="twitter:image" content="https://s1.51cto.com/images/blog/201805/16/83a70a52fa09cd771573b72f0fe722d5.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=">
 
 
@@ -389,7 +389,7 @@
       
 
       
-        <p>FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。<br>下面我将在Redhat6.5中搭建ftp服务，包括匿名用户登录，普通用户身份验证登录，黑名单，虚拟用户登录，并在win7客户端进行登录验证+</p>
+        <p>FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。<br><a id="more"></a><br>下面我将在Redhat6.5中搭建ftp服务，包括匿名用户登录，普通用户身份验证登录，黑名单，虚拟用户登录，并在win7客户端进行登录验证+</p>
 <hr>
 <p>1、在Linux中安装ftp软件包<br><img src="https://s1.51cto.com/images/blog/201805/16/83a70a52fa09cd771573b72f0fe722d5.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=" alt=""></p>
 <p>2、开启ftp服务</p>
