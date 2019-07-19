@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="Less-1首先传入id发现都能显示  猜测后台传参形式大概是这样  select ... from ... where id =&amp;apos;1&amp;apos;  试着闭合一下  传入id=1&amp;apos;  发现报错  传入id=1&amp;apos;%23  发现正确  所以猜想应该正确~   接着试着查看该表的列  传入id=1&amp;apos; order by 4  显示不存在  传入id=1&amp;apos">
+<meta name="description" content="Less-1首先传入id发现都能显示 猜测后台传参形式大概是这样 select … from … where id =’1’ 试着闭合一下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sqli-labs-master">
 <meta property="og:url" content="http://yoursite.com/2019/07/19/sqli-labs-master/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="Less-1首先传入id发现都能显示  猜测后台传参形式大概是这样  select ... from ... where id =&amp;apos;1&amp;apos;  试着闭合一下  传入id=1&amp;apos;  发现报错  传入id=1&amp;apos;%23  发现正确  所以猜想应该正确~   接着试着查看该表的列  传入id=1&amp;apos; order by 4  显示不存在  传入id=1&amp;apos">
+<meta property="og:description" content="Less-1首先传入id发现都能显示 猜测后台传参形式大概是这样 select … from … where id =’1’ 试着闭合一下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-19T15:07:31.670Z">
+<meta property="og:updated_time" content="2019-07-19T15:10:50.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqli-labs-master">
-<meta name="twitter:description" content="Less-1首先传入id发现都能显示  猜测后台传参形式大概是这样  select ... from ... where id =&amp;apos;1&amp;apos;  试着闭合一下  传入id=1&amp;apos;  发现报错  传入id=1&amp;apos;%23  发现正确  所以猜想应该正确~   接着试着查看该表的列  传入id=1&amp;apos; order by 4  显示不存在  传入id=1&amp;apos">
+<meta name="twitter:description" content="Less-1首先传入id发现都能显示 猜测后台传参形式大概是这样 select … from … where id =’1’ 试着闭合一下">
 
 
 
@@ -371,28 +371,16 @@
       
 
       
-        <a id="more"></a>
-<hr>
-<h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><pre><code>首先传入id发现都能显示
-
-猜测后台传参形式大概是这样
-
-select ... from ... where id =&apos;1&apos;
-
-试着闭合一下
-
-传入id=1&apos;
-
-发现报错
-
-传入id=1&apos;%23
-
-发现正确
-
-所以猜想应该正确~
-
-
-接着试着查看该表的列
+        <h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><p>首先传入id发现都能显示</p>
+<p>猜测后台传参形式大概是这样</p>
+<p>select … from … where id =’1’</p>
+<p>试着闭合一下<br><a id="more"></a></p>
+<p>传入id=1’</p>
+<p>发现报错</p>
+<p>传入id=1’%23</p>
+<p>发现正确</p>
+<p>所以猜想应该正确~</p>
+<pre><code>接着试着查看该表的列
 
 传入id=1&apos; order by 4
 

