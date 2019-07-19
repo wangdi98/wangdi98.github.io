@@ -371,159 +371,17 @@
 
       
         
-          
-            <h2 id="1-HTTP协议"><a href="#1-HTTP协议" class="headerlink" title="##1.HTTP协议##"></a>##<strong>1.HTTP协议</strong>##</h2><p>HTTP协议各个参数详解<br>HTTP消息是由普通ASCII文本组成。消息包括消息头和数据体部分。消息头以行为单位，每行以CRLF（回车和换行）结束，消息头结束后，额外增加一个CRLF，之后内容就是数据体部分了。</p>
-<h2 id="http请求"><a href="#http请求" class="headerlink" title="http请求:"></a>http请求:</h2><p>实例如下:</p>
-<pre><code>GET/sample.jspHTTP/1.1
-
-Accept:image/gif.image/jpeg,*/*
-
-Accept-Language:zh-cn
-
-Connection:Keep-Alive
-
-Host:localhost
-
-User-Agent:Mozila/4.0(compatible;MSIE5.01;Window NT5.0)
-
-Accept-Encoding:gzip,deflate
-
-
-username=jinqiao&amp;password=1234
-</code></pre><h2 id="请求方式-RequestMethod"><a href="#请求方式-RequestMethod" class="headerlink" title="请求方式(RequestMethod):"></a>请求方式(RequestMethod):</h2><p>OPTIONS、GET、HEAD、POST、PUT、DELETE、TRACE和CONNECT。</p>
-<pre><code>GET     请求获取Request-URI所标识的资源
-
-POST    在Request-URI所标识的资源后附加新的数据
-
-HEAD    请求获取由Request-URI所标识的资源的响应消息报头
-
-PUT     请求服务器存储一个资源，并用Request-URI作为其标识
-
-DELETE  请求服务器删除Request-URI所标识的资源
-
-TRACE   请求服务器回送收到的请求信息，主要用于测试或诊断
-
-CONNECT 保留将来使用
-</code></pre><p>##参数 ##<br>    OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求</p>
-<pre><code>User-Agent：客户端的浏览器信息。
-
-Connection：close表示使用短连接，Keep-Alive表示客户端支持持久连接。
-
-Date：消息产生的当前时间。
-
-Accept-Language：客户端支持的语言。
-
-Cache-Control：客户端是否支持cache。no-cache表示客户端不支持cache，如max-age=3600，告诉User Agent 该请求的响应结果在多长时间内有效，在有效期内，当用户再次需要访问时，直接从客户端本地提取，不需要访问服务器。
-
-Referer：Referer用以告诉服务器该请求来自于哪个URL，可以用追踪用户的WEB访问路径。
-
-If-Modified-Since: 如果请求消息包含If-Modified-Since标题 域，GET方法的语法就变成“条件GET”，即“（conditional GET）”。 条件GET方法可以对指定资源进行判断，如果它在If-Modified-Since标题域中的指定日期后发生了更新，才启动传输，否则不传输。这种条件 GET允许被缓存的实体在不必经过多次请求或不必要的数据传输就能进行刷新，从而有助于降低网络负载。
-
-Last-Modified: Sun, 03 Dec 2008 23:52:56 GMT
-
-ETag: “1cbf3-dfd-3a2adcd8″
-
-    一般应用在文件下载上，用于标识响应内容的最后修改时间或内容较验码，当下一次User agent需要时，服务首先判断这二个值是否跟服务器上一致，一样则不需要返回内容。
-
-Expires：该请求的响应结果在什么时间失效，在没有失效之前，代理可直接从缓存中返回以前的响应结果。
-
-Host：指定请求资源的主机和端口号。HTTP/1.1请求必须指定Host，否则服务器会返回400状态码。
-</code></pre><h1 id="http响应"><a href="#http响应" class="headerlink" title="http响应:"></a>http响应:</h1><p>实例如下:</p>
-<pre><code>HTTP/1.1 200 OK
-
-Date: Mon, 04 May 2015 04:47:13 GMT
-
-Server: Apache
-
-Cache-Control: max-age=0
-
-Expires: Mon, 04 May 2015 04:47:13 GMT
-
-Vary: Accept-Encoding,User-Agent
-
-Connection: close
-
-Transfer-Encoding: chunked
-
-Content-Type: text/html;charset=utf-8
-
-X-Pad: avoid browser bug
-</code></pre><h2 id="状态行包括"><a href="#状态行包括" class="headerlink" title="状态行包括"></a>状态行包括</h2><p>HTTP协议版本号、状态码、状态码的文本描述信息。如：HTTP/1.1 200 OK<br>状态码由一个三位数组成，状态码大体有5种含义：</p>
-<ol>
-<li><p>1xx。信息，请求收到，继续处理。</p>
-</li>
-<li><p>2xx。成功。200请求成功；206断点续传。</p>
-</li>
-<li><p>3xx。重定向。一般跳转到新的地址。</p>
-</li>
-<li><p>4xx。客户端错误。404文件不存在</p>
-</li>
-<li><p>5xx。服务器错误。500内部错误。</p>
-</li>
-</ol>
-<hr>
-<ul>
-<li>Set-Cookie：服务器设置客户端Cookie。设置格式是name=value，设置多个参数时中 间用分号隔开。Set-Cookie时还会用到几个参数：PATH设置有效的路径，DOMAIN设置cookie生效的域名，Expire设置 cookie的有效时间，0表示关闭浏览器就失效。</li>
-</ul>
-<ul>
-<li>Location：当服务器返回3xx重定向时，该参数实现重定向。广告链接的跳转就使用这种协议。</li>
-</ul>
-<ul>
-<li>Content-Length：附属体（数据实体）的长度</li>
-</ul>
-<h1 id="CTF里面的WEB题的一些解决思路"><a href="#CTF里面的WEB题的一些解决思路" class="headerlink" title="CTF里面的WEB题的一些解决思路"></a>CTF里面的WEB题的一些解决思路</h1><p><img src="https://img-blog.csdn.net/2018041923184982?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RBTEUxMTg2NDg3MTA0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></p>
-<hr>
-<pre><code>(1):直接查看源码：查看源码的方法除了鼠标右键查看外，还可以通过在网址栏前面加入”view-source:“，语句或者通过F12键打开控制台，通过控制台改变一些元素的信息来获取flag
-
-
-
-
-
-(2)  查看修改过添加HTTP请求头响应头：对于这种类型的题目，可能直接修改信息行不通，那就得用到BP这个工具了，通过修改代理来间接改变成题目所需要的信息，再通过软件运行，即可得到flag，对于一些有SQL语句预防的情况下可以使用“’ or 1=1 group by pwd with rollup limit 1 offset 2#   ”这条语句直接得到flag
-
-
-
-(3) 后台登录   绕过登录获得FLAG
-
-
-
-
-(4)利用开发者工具控制台 如果打开题目是很多的代码，可以将代码粘贴至控制台（例如jother代码属于js代码的一种）然后控制台会执行该代码
-
-
-
-
-
-(5)使用BP拦截  BP是一个很强大的软件，如果对于该软件不怎么了解的话，可以参考BP的手册Burp-Suite-使用手册.docx，可以很快的使用这个软件完成各种功能
-
-
-
-(6)上传绕过  由于文件上传功能实现代码没有严格限制用户上传到文件后缀以及文件类型，导致攻击者能够向某个可通过WEB访问的目录上传恶意文件，并被脚本解析器执行，这样就可以在远程服务器上执行恶意脚本 例如  一句话木马
-
-文件截断：在文件头末尾改变一下，把十六进制的空格（20）改成空字节（00）
-
-
-
-(7)SQL注入  SQL注入就是把sql语句以精妙的方式放到输入框中，送到后台去执行，从而获取非法的信息
-
-判断是否存在SQL注入的一些语句：”1‘ and 1=1，””and 1=2”
-
-
-
-
-(8)cookie 登录网站的时候会产生cookie信息，通过获取cookie信息来绕过登录
-
-用BP来获取数据包，通过删掉cookie信息来得到flag
-
-
-
-
-(9)HASH函数 利用sha函数的漏洞（sha函数默认传入的是字符串，传入其他类型得到的结果是false)
-</code></pre>
-          
+          <h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="##HTTP协议##"></a>##HTTP协议##</h2><p>HTTP协议各个参数详解<br>HTTP消息是由普通ASCII文本组成。消息包括消息头和数据体部分。消息头以行为单位，每行以CRLF（回车和换行）结束，消息头结束后，额外增加一个CRLF，之后内容就是数据体部分了。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/16/Web基础知识/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
     
     
     
