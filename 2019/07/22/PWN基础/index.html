@@ -73,8 +73,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="Myblog" type="application/atom+xml">
 
@@ -83,17 +81,17 @@
 
 
 
-<meta name="description" content="##关于我学习前端知识 email: 1203539559@qq.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="pwntools简单语法作为最好用的pwn工具,简单记一下用法：  连接：本地process()、远程remote( , )；对于remote函数可以接url并且指定端口 数据处理：主要是对整数进行打包：p32、p64是打包为二进制，u32、u64是解包为二进制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PWN基础">
+<meta property="og:url" content="http://yoursite.com/2019/07/22/PWN基础/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="##关于我学习前端知识 email: 1203539559@qq.com">
+<meta property="og:description" content="pwntools简单语法作为最好用的pwn工具,简单记一下用法：  连接：本地process()、远程remote( , )；对于remote函数可以接url并且指定端口 数据处理：主要是对整数进行打包：p32、p64是打包为二进制，u32、u64是解包为二进制">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-11T08:01:40.498Z">
+<meta property="og:updated_time" content="2019-07-23T11:18:06.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="##关于我学习前端知识 email: 1203539559@qq.com">
+<meta name="twitter:title" content="PWN基础">
+<meta name="twitter:description" content="pwntools简单语法作为最好用的pwn工具,简单记一下用法：  连接：本地process()、远程remote( , )；对于remote函数可以接url并且指定端口 数据处理：主要是对整数进行打包：p32、p64是打包为二进制，u32、u64是解包为二进制">
 
 
 
@@ -123,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/22/PWN基础/">
 
 
 
 
 
-  <title>about | Myblog</title>
+  <title>PWN基础 | Myblog</title>
   
 
 
@@ -294,35 +292,205 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/22/PWN基础/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WD">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Myblog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>##关于我<br>学习前端知识</p>
-<p>email: <a href="mailto:1203539559@qq.com" target="_blank" rel="noopener">1203539559@qq.com</a></p>
-
+          <h1 class="post-title" itemprop="name headline">PWN基础</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-22T20:44:42+08:00">
+                2019-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="pwntools简单语法"><a href="#pwntools简单语法" class="headerlink" title="pwntools简单语法"></a>pwntools简单语法</h2><p>作为最好用的pwn工具,简单记一下用法：</p>
+<ul>
+<li>连接：本地process()、远程remote( , )；对于remote函数可以接url并且指定端口</li>
+<li>数据处理：主要是对整数进行打包：p32、p64是打包为二进制，u32、u64是解包为二进制<a id="more"></a></li>
+<li>IO模块：这个比较容易跟zio搞混，记住zio是read、write，pwn是recv、send</li>
+</ul>
+<hr>
+<pre><code>send(data): 发送数据
+
+sendline(data) : 发送一行数据，相当于在末尾加\n      
+
+recv(numb=4096, timeout=default) : 给出接收字节数,timeout指定超时
+
+recvuntil(delims, drop=False) : 接收到delims的pattern
+
+（以下可以看作until的特例）
+
+recvline(keepends=True) : 接收到\n，keepends指定保留\n
+
+recvall() : 接收到EOF
+
+recvrepeat(timeout=default) : 接收到EOF或timeout
+
+interactive() : 与shell交互
+</code></pre><ul>
+<li>ELF模块：获取基地址、获取函数地址（基于符号）、获取函数got地址、获取函数plt地址</li>
+</ul>
+<hr>
+<pre><code>e = ELF(&apos;/bin/cat&apos;)
+
+print hex(e.address)  # 文件装载的基地址
+
+0x400000
+
+print hex(e.symbols[&apos;write&apos;]) # 函数地址
+
+0x401680
+
+print hex(e.got[&apos;write&apos;]) # GOT表的地址
+
+0x60b070
+
+print hex(e.plt[&apos;write&apos;]) # PLT的地址
+
+0x401680
+</code></pre><hr>
+<ul>
+<li>解题常用</li>
+</ul>
+<hr>
+<pre><code>context.arch = &apos;amd64&apos;   //设置架构
+
+context.log_level = &apos;debug&apos; //显示log详细信息
+
+libc = ELF(&apos;./libc-2.24.so&apos;)  //加载库文件
+</code></pre><hr>
+<ul>
+<li>Pwn基础知识</li>
+</ul>
+<hr>
+<p>ELF可重定位目标文件的节:</p>
+<blockquote>
+<p>.bss（Block Strorage Start） 储存未初始化的全局和c变量，和被初始化为0的全局和静态变量</p>
+</blockquote>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/sqli-labs-master/" rel="next" title="sqli-labs-master">
+                <i class="fa fa-chevron-left"></i> sqli-labs-master
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/23/pwn-level0/" rel="prev" title="pwn_level0">
+                pwn_level0 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -355,8 +523,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -407,6 +584,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pwntools简单语法"><span class="nav-number">1.</span> <span class="nav-text">pwntools简单语法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
