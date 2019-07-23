@@ -44,7 +44,7 @@
       &lt;h2 id=&quot;pwntools简单语法&quot;&gt;&lt;a href=&quot;#pwntools简单语法&quot; class=&quot;headerlink&quot; title=&quot;pwntools简单语法&quot;&gt;&lt;/a&gt;pwntools简单语法&lt;/h2&gt;&lt;p&gt;作为最好用的pwn工具,简单记一下用法：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;连接：本地process()、远程remote( , )；对于remote函数可以接url并且指定端口&lt;/li&gt;
-&lt;li&gt;数据处理：主要是对整数进行打包：p32、p64是打包为二进制，u32、u64是解包为二进制
+&lt;li&gt;数据处理：主要是对整数进行打包：p32、p64是打包为二进制，u32、u64是解包为二进制&lt;/li&gt;&lt;/ul&gt;
     
     </summary>
     
@@ -84,7 +84,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;CMS漏洞复现：&lt;br&gt;
+      &lt;p&gt;CMS漏洞复现：&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -102,7 +102,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;HTTP协议&quot;&gt;&lt;a href=&quot;#HTTP协议&quot; class=&quot;headerlink&quot; title=&quot;##HTTP协议##&quot;&gt;&lt;/a&gt;##HTTP协议##&lt;/h2&gt;&lt;p&gt;HTTP协议各个参数详解&lt;br&gt;HTTP消息是由普通ASCII文本组成。消息包括消息头和数据体部分。消息头以行为单位，每行以CRLF（回车和换行）结束，消息头结束后，额外增加一个CRLF，之后内容就是数据体部分了。&lt;br&gt;
+      &lt;h2 id=&quot;HTTP协议&quot;&gt;&lt;a href=&quot;#HTTP协议&quot; class=&quot;headerlink&quot; title=&quot;##HTTP协议##&quot;&gt;&lt;/a&gt;##HTTP协议##&lt;/h2&gt;&lt;p&gt;HTTP协议各个参数详解&lt;br&gt;HTTP消息是由普通ASCII文本组成。消息包括消息头和数据体部分。消息头以行为单位，每行以CRLF（回车和换行）结束，消息头结束后，额外增加一个CRLF，之后内容就是数据体部分了。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -121,7 +121,7 @@
     <summary type="html">
     
       &lt;p&gt;X-Forwarded-For 是一个 HTTP 扩展头部，主要是为了让 Web 服务器获&lt;/p&gt;
-&lt;p&gt;取访问用户的真实 IP 地址（其实这个真实未必是真实的，后面会说到）。&lt;br&gt;
+&lt;p&gt;取访问用户的真实 IP 地址（其实这个真实未必是真实的，后面会说到）。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -146,7 +146,7 @@
 &lt;p&gt;  2.端口扫描&lt;/p&gt;
 &lt;p&gt;  3.版本检测htt&lt;/p&gt;
 &lt;p&gt;  4.系统检测&lt;/p&gt;
-&lt;p&gt;  5.支持探测脚本的编写&lt;/p&gt;
+&lt;p&gt;  5.支持探测脚本的编写&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;
     
     </summary>
     
@@ -189,7 +189,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。&lt;br&gt;
+      &lt;p&gt;FTP(File Transfer Protocol，文件传输协议)是典型的C/S结构的应用层协议，需要由服务端软件、客户端软件两个部分共同实现文件传输功能。FTP连接有两种模式：主动模式（服务器主动发起数据连接）和被动模式（服务器被动等待数据连接）。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -245,7 +245,7 @@
     
       &lt;h2 id=&quot;弱等于-“-”&quot;&gt;&lt;a href=&quot;#弱等于-“-”&quot; class=&quot;headerlink&quot; title=&quot;弱等于 “==”&quot;&gt;&lt;/a&gt;弱等于 “==”&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;== 在进行比较的时候，会先将字符串类型转化成相同，再比较。&lt;blockquote&gt;
-&lt;p&gt;如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行&lt;/p&gt;
+&lt;p&gt;如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行&lt;/p&gt;&lt;/blockquote&gt;&lt;/li&gt;&lt;/ol&gt;
     
     </summary>
     
@@ -263,7 +263,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;在 PHP 中，预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。&lt;br&gt;
+      &lt;p&gt;在 PHP 中，预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
@@ -281,7 +281,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp&lt;br&gt;
+      &lt;p&gt;1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp&lt;br&gt;&lt;/p&gt;
     
     </summary>
     
