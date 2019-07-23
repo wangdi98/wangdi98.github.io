@@ -88,16 +88,16 @@
 <meta property="og:site_name" content="Myblog">
 <meta property="og:description" content="基于hexo+github搭建一个独立博客阅读目录(Content)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/9X8s4ce.png">
-<meta property="og:image" content="https://i.imgur.com/vLhmi9r.png">
-<meta property="og:image" content="https://i.imgur.com/JUaCwvZ.png">
-<meta property="og:image" content="https://i.imgur.com/FkZHUrJ.png">
-<meta property="og:image" content="https://i.imgur.com/IdvXZns.png">
-<meta property="og:updated_time" content="2019-07-23T11:43:38.943Z">
+<meta property="og:image" content="https://i.imgur.com/7Yfd83N.png">
+<meta property="og:image" content="https://i.imgur.com/xyGnMzD.png">
+<meta property="og:image" content="https://i.imgur.com/S2YLR9h.png">
+<meta property="og:image" content="https://i.imgur.com/kaDXBGH.png">
+<meta property="og:image" content="https://i.imgur.com/uhveSGn.png">
+<meta property="og:updated_time" content="2019-07-23T11:55:25.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于hexo+github的博客搭建">
 <meta name="twitter:description" content="基于hexo+github搭建一个独立博客阅读目录(Content)">
-<meta name="twitter:image" content="https://i.imgur.com/9X8s4ce.png">
+<meta name="twitter:image" content="https://i.imgur.com/7Yfd83N.png">
 
 
 
@@ -392,10 +392,11 @@
 <p>初始化<br>终端cd到一个你选定的目录（比如创建一个blog文件，$cd blog），执行hexo init命令：</p>
 <p>$ hexo init<br>在blog目录下，执行如下命令，安装npm：</p>
 <p>$ npm install<br>执行如下命令，开启hexo服务器：</p>
-<p>$ hexo s<br>此时，浏览器中打开网址<a href="http://localhost:4000，能看到如下页面：" target="_blank" rel="noopener">http://localhost:4000，能看到如下页面：</a><br><img src="https://i.imgur.com/9X8s4ce.png" alt=""></p>
+<p>$ hexo s<br>此时，浏览器中打开网址<a href="http://localhost:4000，能看到如下页面：" target="_blank" rel="noopener">http://localhost:4000，能看到如下页面：</a></p>
+<p><img src="https://i.imgur.com/7Yfd83N.png" alt=""></p>
 <p>本地设置好后，接下来开始关联Github。</p>
 <p>1.创建仓库<br>登录你的Github帐号，新建仓库，名为用户名.github.io固定写法。</p>
-<p><img src="https://i.imgur.com/vLhmi9r.png" alt=""></p>
+<p><img src="https://i.imgur.com/xyGnMzD.png" alt=""></p>
 <p>本地的blog文件夹下内容为：</p>
 <p>_config.yml<br>db.json<br>node_modules<br>package.json<br>scaffolds<br>source<br>themes<br>终端cd到blog文件夹下，vim打开_config.yml，命令如下：</p>
 <p>$ vim _config.yml<br>打开后往下滑到最后，修改成下边的样子：</p>
@@ -406,7 +407,7 @@
 <p>$ hexo deploy            或者：hexo d<br>注意坑三：若执行命令hexo deploy仍然报错：无法连接git或找不到git，则执行如下命令来安装hexo-deployer-git：</p>
 <p>$ npm install hexo-deployer-git –save<br>若你未关联Github，则执行hexo deploy命令时终端会提示你输入Github的用户名和密码，即</p>
 <p>Username for ‘<a href="https://github.com&#39;" target="_blank" rel="noopener">https://github.com&#39;</a>:<br>Password for ‘<a href="https://github.com&#39;" target="_blank" rel="noopener">https://github.com&#39;</a>:<br>hexo deploy命令执行成功后，浏览器中打开网址<a href="http://MuYunyun.github.io（将MuYunyun换成你的用户名）能看到和打开http://localhost:4000时一样的页面。" target="_blank" rel="noopener">http://MuYunyun.github.io（将MuYunyun换成你的用户名）能看到和打开http://localhost:4000时一样的页面。</a>　</p>
-<p><img src="https://i.imgur.com/JUaCwvZ.png" alt=""></p>
+<p><img src="https://i.imgur.com/S2YLR9h.png" alt=""></p>
 <p>为避免每次输入Github用户名和密码的麻烦，可参照第二节方法</p>
 <p>回到顶部(go to top)<br>2.添加ssh key到Github<br>1.1.检查SSH keys是否存在Github</p>
 <p>执行如下命令，检查SSH keys是否存在。如果有文件id_rsa.pub或id_dsa.pub，则直接进入步骤1.3将SSH key添加到Github中，否则进入下一步生成SSH key。</p>
@@ -427,7 +428,7 @@
 <p>终端cd到blog目录下执行如下命令(每次部署文章的步骤)：</p>
 <p>$ hexo clean           //清除缓存文件 (db.json) 和已生成的静态文件 (public)<br>$ hexo g             //生成缓存和静态文件<br>$ hexo d             //重新部署到服务器<br>至于更改theme内容，比如名称，描述，头像等去修改blog/_config.yml文件和blog/themes/next/_config.yml文件中对应的属性名称即可，不要忘记冒号:后加空格。NexT 使用文档里有极详细的介绍。</p>
 <p>回到顶部(go to top)<br>绑定个人域名<br>首先假设你有一个域名并且是可用状态。修改你域名的DNS地址为 f1g1ns1.dnspod.net和f1g1ns2.dnspod.net</p>
-<p><img src="https://i.imgur.com/FkZHUrJ.png" alt=""></p>
+<p><img src="https://i.imgur.com/kaDXBGH.png" alt=""></p>
 <p>现在使用的域名是Github提供的二级域名，也可以绑定为自己的个性域名。购买域名，我是在万网买的，可直接在其网站做域名解析。</p>
 <p>1.Github端</p>
 <p>在/blog/themes/landscape/source目录下新建文件名为：CNAME文件，注意没有后缀名！直接将自己的域名如：muyunyun.cn写入。</p>
@@ -437,7 +438,7 @@
 <p>记录类型：CNAME</p>
 <p>主机记录：将域名解析为example.com（不带www），填写@或者不填写</p>
 <p>记录值：MuYunyun.github.io. (不要忘记最后的.，MuYunyun改为你自己的用户名)，点击保存即可，如下图：</p>
-<p><img src="https://i.imgur.com/IdvXZns.png" alt=""></p>
+<p><img src="https://i.imgur.com/uhveSGn.png" alt=""></p>
 <p>1<br>ps:万网DNS地址更换貌似需要一段时间才能生效，如果不能访问请晚点或者隔天再访问域名，如果还是不行可能就是出问题了。<br>铛铛铛，点击MuYunyun.github.io和访问<a href="http://muyunyun.cn/访问效果一致" target="_blank" rel="noopener">http://muyunyun.cn/访问效果一致</a></p>
 
       
