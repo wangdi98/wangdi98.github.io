@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-23T11:18:06.680Z</updated>
+  <updated>2019-07-23T13:00:47.634Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo 搭建个人博客部署环节spawn failed及解决</title>
+    <link href="http://yoursite.com/2019/07/23/hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E7%8E%AF%E8%8A%82spawn-failed%E5%8F%8A%E8%A7%A3%E5%86%B3/"/>
+    <id>http://yoursite.com/2019/07/23/hexo-搭建个人博客部署环节spawn-failed及解决/</id>
+    <published>2019-07-23T12:57:02.149Z</published>
+    <updated>2019-07-23T13:00:47.634Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="搭建hexo个人博客的部署环节"><a href="#搭建hexo个人博客的部署环节" class="headerlink" title="搭建hexo个人博客的部署环节"></a>搭建hexo个人博客的部署环节</h2><hr><ul><li>1、先把git加入系统环境变量；</li><li>2、再将博客目录里的.git文件夹删除</li><li>3.、命令步骤：</li></ul><hr><pre><code>hexo cleanhexo  ghexo  d</code></pre><hr><p>建议：不要使用cmd上传，用Git bash或其他</p><p><img src="https://img-blog.csdnimg.cn/20190404135506907.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25qY19zZWM=,size_16,color_FFFFFF,t_70" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;搭建hexo个人博客的部署环节&quot;&gt;&lt;a href=&quot;#搭建hexo个人博客的部署环节&quot; class=&quot;headerlink&quot; title=&quot;搭建hexo个人博客的部署环节&quot;&gt;&lt;/a&gt;搭建hexo个人博客的部署环节&lt;/h2&gt;&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;1、先把git
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>pwn_level0</title>
