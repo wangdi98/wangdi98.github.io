@@ -380,6 +380,7 @@
 <p>  4.系统检测</p>
 <p>  5.支持探测脚本的编写</p>
 <a id="more"></a>
+
 </li>
 </ul>
 <hr>
@@ -404,34 +405,29 @@
 
 nmap &lt;target ip address&gt;其中：target ip address
 
-是扫描的目标主机的ip地址
-</code></pre><p>2.nmap简单扫描，并对结果返回详细的描述输出</p>
+是扫描的目标主机的ip地址</code></pre><p>2.nmap简单扫描，并对结果返回详细的描述输出</p>
 <pre><code>命令语法：namp -vv &lt;target ip address&gt;
 
-介绍：-vv参数设置对结果的详细输出
-</code></pre><p>3.nmap自定义扫描</p>
+介绍：-vv参数设置对结果的详细输出</code></pre><p>3.nmap自定义扫描</p>
 <pre><code>命令语法：nmap -p(range) &lt;target IP&gt;
 
 介绍：（range）为要扫描的端口范围，端口大小不能超过65535
 
 例子：扫描目标主机的1-50号端口
 
-nmap -p50-80 10.0.0.55
-</code></pre><p>4.nmap 指定端口扫描</p>
+nmap -p50-80 10.0.0.55</code></pre><p>4.nmap 指定端口扫描</p>
 <pre><code>命令语法：nmap -p(port1,port2,…) &lt;target IP&gt;
 
 介绍：port1,port2…为想要扫描的端口号
 
 例子：扫描目标主机的80，443，801端口
 
-nmap -p80,443,801 10.0.0.55
-</code></pre><p>5.nmap ping 扫描</p>
+nmap -p80,443,801 10.0.0.55</code></pre><p>5.nmap ping 扫描</p>
 <pre><code>nmap可以利用类似windows/linux系统下的ping 方式进行扫描
 
 命令语法： nmap -sP &lt;target ip&gt;
 
-例子：nmap sP 10.1.112.89
-</code></pre><p>6.nmap路由追踪</p>
+例子：nmap sP 10.1.112.89</code></pre><p>6.nmap路由追踪</p>
 <pre><code>路由器追踪功能，能够帮助网络管理员了解网络通行情况，同时也是网络管
 
 理人员很好的辅助工具，通过路由器追踪可以轻松的查处从我们电脑所在地
@@ -442,29 +438,25 @@ nmap -p80,443,801 10.0.0.55
 
 nmap –traceroute &lt;target IP&gt;
 
-例子:namp –traceroute 8.8.8.8(geogle dns服务器ip)
-</code></pre><p>7.nmap设置扫描一个网段下的ip</p>
+例子:namp –traceroute 8.8.8.8(geogle dns服务器ip)</code></pre><p>7.nmap设置扫描一个网段下的ip</p>
 <pre><code>命令语法： 
 
 nmap -sP &lt;network address&gt; &lt;/CIDR&gt;
 
 介绍：CIDR为设置的子网掩码（/24,/16,/8等）
 
-例子：nmap -sP 10.1.1.0 /24
-</code></pre><p>8.nmap操作系统类型的探测</p>
+例子：nmap -sP 10.1.1.0 /24</code></pre><p>8.nmap操作系统类型的探测</p>
 <pre><code>命令语法： 
 nmap -0 &lt;target IP&gt;
 
-例子：nmap -O(大写的o) 10.1.112.89
-</code></pre><p>9.nmap万能开关</p>
+例子：nmap -O(大写的o) 10.1.112.89</code></pre><p>9.nmap万能开关</p>
 <pre><code>包含了1-10000端口ping扫描，操作系统扫描，脚本扫描，路由跟踪，服务探测
 
 命令语法： 
 
 nmap -A &lt;target ip&gt;
 
-例子：nmap -A 10.1.112.89
-</code></pre><p>10.nmap命令混合式扫描</p>
+例子：nmap -A 10.1.112.89</code></pre><p>10.nmap命令混合式扫描</p>
 <pre><code>可以做到类似参数-A所完成的功能，但又能细化我们的需求要求
 
 命令语法： 
@@ -473,8 +465,7 @@ nmap -vv -p1-100 -O &lt;target ip&gt;
 
 例子： 
 
-nmap -vv -p1-100 -O 10.1.112.89
-</code></pre>
+nmap -vv -p1-100 -O 10.1.112.89</code></pre>
       
     </div>
     

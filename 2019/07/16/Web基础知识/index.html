@@ -373,7 +373,9 @@
       
 
       
-        <h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="##HTTP协议##"></a>##HTTP协议##</h2><p>HTTP协议各个参数详解<br>HTTP消息是由普通ASCII文本组成。消息包括消息头和数据体部分。消息头以行为单位，每行以CRLF（回车和换行）结束，消息头结束后，额外增加一个CRLF，之后内容就是数据体部分了。<br><a id="more"></a></p>
+        <h2 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="##HTTP协议##"></a>##HTTP协议##</h2><p>HTTP协议各个参数详解<br>HTTP消息是由普通ASCII文本组成。消息包括消息头和数据体部分。消息头以行为单位，每行以CRLF（回车和换行）结束，消息头结束后，额外增加一个CRLF，之后内容就是数据体部分了。</p>
+<a id="more"></a>
+
 <h2 id="http请求"><a href="#http请求" class="headerlink" title="http请求:"></a>http请求:</h2><p>实例如下:</p>
 <pre><code>GET/sample.jspHTTP/1.1
 
@@ -390,8 +392,7 @@ User-Agent:Mozila/4.0(compatible;MSIE5.01;Window NT5.0)
 Accept-Encoding:gzip,deflate
 
 
-username=jinqiao&amp;password=1234
-</code></pre><h2 id="请求方式-RequestMethod"><a href="#请求方式-RequestMethod" class="headerlink" title="请求方式(RequestMethod):"></a>请求方式(RequestMethod):</h2><p>OPTIONS、GET、HEAD、POST、PUT、DELETE、TRACE和CONNECT。</p>
+username=jinqiao&amp;password=1234</code></pre><h2 id="请求方式-RequestMethod"><a href="#请求方式-RequestMethod" class="headerlink" title="请求方式(RequestMethod):"></a>请求方式(RequestMethod):</h2><p>OPTIONS、GET、HEAD、POST、PUT、DELETE、TRACE和CONNECT。</p>
 <pre><code>GET     请求获取Request-URI所标识的资源
 
 POST    在Request-URI所标识的资源后附加新的数据
@@ -404,8 +405,7 @@ DELETE  请求服务器删除Request-URI所标识的资源
 
 TRACE   请求服务器回送收到的请求信息，主要用于测试或诊断
 
-CONNECT 保留将来使用
-</code></pre><p>##参数 ##<br>    OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求</p>
+CONNECT 保留将来使用</code></pre><p>##参数 ##<br>    OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求</p>
 <pre><code>User-Agent：客户端的浏览器信息。
 
 Connection：close表示使用短连接，Keep-Alive表示客户端支持持久连接。
@@ -428,8 +428,7 @@ ETag: “1cbf3-dfd-3a2adcd8″
 
 Expires：该请求的响应结果在什么时间失效，在没有失效之前，代理可直接从缓存中返回以前的响应结果。
 
-Host：指定请求资源的主机和端口号。HTTP/1.1请求必须指定Host，否则服务器会返回400状态码。
-</code></pre><h1 id="http响应"><a href="#http响应" class="headerlink" title="http响应:"></a>http响应:</h1><p>实例如下:</p>
+Host：指定请求资源的主机和端口号。HTTP/1.1请求必须指定Host，否则服务器会返回400状态码。</code></pre><h1 id="http响应"><a href="#http响应" class="headerlink" title="http响应:"></a>http响应:</h1><p>实例如下:</p>
 <pre><code>HTTP/1.1 200 OK
 
 Date: Mon, 04 May 2015 04:47:13 GMT
@@ -448,8 +447,7 @@ Transfer-Encoding: chunked
 
 Content-Type: text/html;charset=utf-8
 
-X-Pad: avoid browser bug
-</code></pre><h2 id="状态行包括"><a href="#状态行包括" class="headerlink" title="状态行包括"></a>状态行包括</h2><p>HTTP协议版本号、状态码、状态码的文本描述信息。如：HTTP/1.1 200 OK<br>状态码由一个三位数组成，状态码大体有5种含义：</p>
+X-Pad: avoid browser bug</code></pre><h2 id="状态行包括"><a href="#状态行包括" class="headerlink" title="状态行包括"></a>状态行包括</h2><p>HTTP协议版本号、状态码、状态码的文本描述信息。如：HTTP/1.1 200 OK<br>状态码由一个三位数组成，状态码大体有5种含义：</p>
 <ol>
 <li><p>1xx。信息，请求收到，继续处理。</p>
 </li>
@@ -519,8 +517,7 @@ X-Pad: avoid browser bug
 
 
 
-(9)HASH函数 利用sha函数的漏洞（sha函数默认传入的是字符串，传入其他类型得到的结果是false)
-</code></pre>
+(9)HASH函数 利用sha函数的漏洞（sha函数默认传入的是字符串，传入其他类型得到的结果是false)</code></pre>
       
     </div>
     

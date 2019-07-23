@@ -371,16 +371,15 @@
       
 
       
-        <p>1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp<br><a id="more"></a><br>2.移除virbr0虚拟网卡；<br><a href="https://blog.csdn.net/csdn_immortal/article/details/81068259" target="_blank" rel="noopener">https://blog.csdn.net/csdn_immortal/article/details/81068259</a></p>
+        <p>1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp</p>
+<a id="more"></a>
+<p>2.移除virbr0虚拟网卡；<br><a href="https://blog.csdn.net/csdn_immortal/article/details/81068259" target="_blank" rel="noopener">https://blog.csdn.net/csdn_immortal/article/details/81068259</a></p>
 <p>3.配置静态ip，要与dhcp子网在同一网段；</p>
-<pre><code>vi /etc/sysconfig/network-scripts/ifcfg-ethxxxx
-</code></pre><p>修改内容：</p>
+<pre><code>vi /etc/sysconfig/network-scripts/ifcfg-ethxxxx</code></pre><p>修改内容：</p>
 <pre><code>BOOTPROTO=static
 IPADDR=192.168.2.5
-GATEWAY=192.168.2.1
-</code></pre><p>4.配置dhcp</p>
-<pre><code>vi /etc/dhcp/dhcpd.conf
-</code></pre><p>修改后内容如下：</p>
+GATEWAY=192.168.2.1</code></pre><p>4.配置dhcp</p>
+<pre><code>vi /etc/dhcp/dhcpd.conf</code></pre><p>修改后内容如下：</p>
 <pre><code>ddns-update-style interim;
 ignore client-updates;
 
@@ -393,8 +392,7 @@ subnet 192.168.2.0 netmask 255.255.255.0 {
         default-lease-time 21600;
         max-lease-time 43200;
 
-}                                                                  
-</code></pre><p>5.开始用service dhcpd start启动dhcp，但出现Redirecting to /bin/systemctl start  dhcpd.service;</p>
+}                                                                  </code></pre><p>5.开始用service dhcpd start启动dhcp，但出现Redirecting to /bin/systemctl start  dhcpd.service;</p>
 <p>改用systemctl start dhcpd.service启动dhcp服务</p>
 <p>用systemctl status dhcpd.service查看服务状态</p>
 

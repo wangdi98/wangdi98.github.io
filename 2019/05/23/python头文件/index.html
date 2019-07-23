@@ -377,6 +377,7 @@
 </ul>
 <p>是把sqrt作为本文件的方法导入进来了，使用的时候只需要直接调用sqrt。</p>
 <a id="more"></a>
+
 <hr>
 <ul>
 <li>import math</li>
@@ -385,8 +386,7 @@
 <pre><code>from math import sqrt
 def sqrt(n):
    return n 
-print sqrt(13689) 
-</code></pre><p>运行py文件输出13689，所以自己定义了函数会自动屏蔽掉。<br>所以大量引用import math.<em>是个比较好的办法，from math import </em>就容易出错了，当然用到很少的函数且次数较多时上面这种办法会比较合适。<br>另外python不支持像java那样import math.sqrt</p>
+print sqrt(13689) </code></pre><p>运行py文件输出13689，所以自己定义了函数会自动屏蔽掉。<br>所以大量引用import math.*是个比较好的办法，from math import *就容易出错了，当然用到很少的函数且次数较多时上面这种办法会比较合适。<br>另外python不支持像java那样import math.sqrt</p>
 <hr>
 
       

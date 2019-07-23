@@ -372,7 +372,9 @@
 
       
         <p>X-Forwarded-For 是一个 HTTP 扩展头部，主要是为了让 Web 服务器获</p>
-<p>取访问用户的真实 IP 地址（其实这个真实未必是真实的，后面会说到）。<br><a id="more"></a></p>
+<p>取访问用户的真实 IP 地址（其实这个真实未必是真实的，后面会说到）。</p>
+<a id="more"></a>
+
 <hr>
 <ul>
 <li>那为什么 Web 服务器只有通过 X-Forwarded-For 头才能获取真实的<br>IP？</li>
@@ -426,8 +428,7 @@ $_SERVER[‘REMOTE_ADDR‘] 获取到的是客户端的真实 IP 。
 
 获取到的 IP 是 Web 服务器 TCP 连接的 IP（这个不能伪造，一般 Web 
 
-服务器也不会修改这个头）。
-</code></pre><hr>
+服务器也不会修改这个头）。</code></pre><hr>
 <ul>
 <li>X-Forwarded-For</li>
 </ul>
@@ -438,14 +439,12 @@ $_SERVER[‘REMOTE_ADDR‘] 获取到的是客户端的真实 IP 。
 
 IP，X-Forwarded-For 出现了，这个协议头也是由 Squid 起草的
 
-（Squid 应该是最早的代理软件之一）。
-</code></pre><hr>
+（Squid 应该是最早的代理软件之一）。</code></pre><hr>
 <ul>
 <li>这个协议头的格式：</li>
 </ul>
 <hr>
-<pre><code>X-Forwarded-For: client, proxy1, proxy2
-</code></pre><ul>
+<pre><code>X-Forwarded-For: client, proxy1, proxy2</code></pre><ul>
 <li><p>client 表示用户的真实 IP，每经过一次代理服务器，代理服务器会在这个头增加用户的 IP（有点拗口）。</p>
 </li>
 <li><p>注意最后一个代理服务器请求 Web 服务器的时候是不会将自己的 IP 附加到 X-Forwarded-For 头上的，最后一个代理服务器的 IP 地址应该通过<strong>$_SERVER[‘REMOTE_ADDR‘]</strong>获取。</p>
@@ -474,11 +473,9 @@ if (!$ip) {
 
 $a = explode(‘|‘, str_replace(‘,‘, ‘|‘, $ip));
 
-$ip = trim($a[0]);
-</code></pre><hr>
+$ip = trim($a[0]);</code></pre><hr>
 <pre><code>这里预先说明下，假设这两个代理服务器都是好的代理服务器，没有伪造 
-HTTP_X_FORWARDED_FOR。
-</code></pre><ul>
+HTTP_X_FORWARDED_FOR。</code></pre><ul>
 <li>配置反向代理</li>
 </ul>
 <hr>
@@ -511,8 +508,7 @@ proxy_set_header X-Forwarded-For
 
 $proxy_add_x_forwarded_for;
 
-proxy_set_header X-Forwarded-Proto $scheme;
-</code></pre><ul>
+proxy_set_header X-Forwarded-Proto $scheme;</code></pre><ul>
 <li><p>简单的解释下：</p>
 <pre><code>X-Forwarded-For 表示 Nginx 接收到的头，原样的转发过来（假如不转
 
@@ -532,15 +528,13 @@ Apache WEB 服务器的 Access 日志如何获取 X-Forwarded-For 头
 
 Forwarded-For（上层的负载均衡设备确定传递了），搜索了下（在 
 
-Apache 官方文档并没有找到解决方案），解决如下：
-</code></pre></li>
+Apache 官方文档并没有找到解决方案），解决如下：</code></pre></li>
 </ul>
 <pre><code>LogFormat &quot;%{X-Forwarded-For}i %a %h %A %l %u %t \&quot;%r\&quot; %
 
 &gt;s %b \&quot;%{Referer}i\&quot;
 
- \&quot;%{User-Agent}i\&quot;&quot; combined
-</code></pre><hr>
+ \&quot;%{User-Agent}i\&quot;&quot; combined</code></pre><hr>
 <h2 id="X-Forwarded-For-安全性"><a href="#X-Forwarded-For-安全性" class="headerlink" title="X-Forwarded-For 安全性"></a>X-Forwarded-For 安全性</h2><pre><code>那么很多同学会说，通过 X-Forwarded-For 就能获取到用户的真实 IP，
 
 是不是万事大吉了，对于 Web 服务器来说，安全有两个纬度，第一个纬度
@@ -596,8 +590,7 @@ IP 地址）。
 
 REMOTE_ADDR 则会误杀一片），但是由于 X-Forwarded-For 可能会伪
 
-造，所以其实并没有什么好的办法，只能在应用层进行处理了。
-</code></pre>
+造，所以其实并没有什么好的办法，只能在应用层进行处理了。</code></pre>
       
     </div>
     
