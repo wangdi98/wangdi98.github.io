@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="拿到题先看看文件时32位的还是64位的 64位的 看看保护机制 PIE关闭 NX开着 栈不可执行 所以不能将shellcode写在栈上 拖到IDA看看 只有俩函数 第一个write没毛病 看看后面的函数 vulnerable_function（） 0x80大小的buf 下面的read函数可以写0x200大小的数据 所以栈溢出？ 所以可以把函数返回地址覆盖掉成system函数的地址 将参数改成b">
+<meta name="description" content="拿到题先看看文件时32位的还是64位的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pwn_level0">
 <meta property="og:url" content="http://yoursite.com/2019/07/23/pwn-level0/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="拿到题先看看文件时32位的还是64位的 64位的 看看保护机制 PIE关闭 NX开着 栈不可执行 所以不能将shellcode写在栈上 拖到IDA看看 只有俩函数 第一个write没毛病 看看后面的函数 vulnerable_function（） 0x80大小的buf 下面的read函数可以写0x200大小的数据 所以栈溢出？ 所以可以把函数返回地址覆盖掉成system函数的地址 将参数改成b">
+<meta property="og:description" content="拿到题先看看文件时32位的还是64位的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-27T07:12:57.483Z">
+<meta property="og:updated_time" content="2019-07-27T07:16:11.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pwn_level0">
-<meta name="twitter:description" content="拿到题先看看文件时32位的还是64位的 64位的 看看保护机制 PIE关闭 NX开着 栈不可执行 所以不能将shellcode写在栈上 拖到IDA看看 只有俩函数 第一个write没毛病 看看后面的函数 vulnerable_function（） 0x80大小的buf 下面的read函数可以写0x200大小的数据 所以栈溢出？ 所以可以把函数返回地址覆盖掉成system函数的地址 将参数改成b">
+<meta name="twitter:description" content="拿到题先看看文件时32位的还是64位的">
 
 
 
@@ -371,9 +371,8 @@
       
 
       
-        <a id="more"></a>
-
-<p>拿到题先看看文件时32位的还是64位的</p>
+        <p>拿到题先看看文件时32位的还是64位的</p>
+<a id="more"></a>
 <p>64位的</p>
 <p>看看保护机制</p>
 <p>PIE关闭</p>
