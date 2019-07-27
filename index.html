@@ -373,8 +373,10 @@
         
           
             <a id="more"></a>
-<blockquote>
-<h2 id="格式化字符串漏洞基本原理"><a href="#格式化字符串漏洞基本原理" class="headerlink" title="- 格式化字符串漏洞基本原理"></a>- 格式化字符串漏洞基本原理</h2><p>格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。</p>
+
+
+<h2 id="格式化字符串漏洞基本原理"><a href="#格式化字符串漏洞基本原理" class="headerlink" title="格式化字符串漏洞基本原理"></a>格式化字符串漏洞基本原理</h2><blockquote>
+<p>格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。</p>
 </blockquote>
 <hr>
 <p>printf()函数的一般形式为printf(“format”, 输出表列)，</p>
@@ -426,41 +428,45 @@ printf(str)</code></pre><p>也许代码编写者的本意只是单纯打印一�
 <ul>
 <li><p>例题</p>
 </li>
-<li></li>
-<li><p>XCTF CGfsb<br>=<br>查看为32位文件<br>拖入IDA</p>
-<p>  int __cdecl main(int argc, const char *<em>argv, const char *</em>envp)<br>  {</p>
-<pre><code>int buf; // [esp+1Eh] [ebp-7Eh]
-int v5; // [esp+22h] [ebp-7Ah]
-__int16 v6; // [esp+26h] [ebp-76h]
-char s; // [esp+28h] [ebp-74h]
-unsigned int v8; // [esp+8Ch] [ebp-10h]
-
-v8 = __readgsdword(0x14u);
-setbuf(stdin, 0);
-setbuf(stdout, 0);
-setbuf(stderr, 0);
-buf = 0;
-v5 = 0;
- v6 = 0;
-memset(&amp;s, 0, 0x64u);
-puts(&quot;please tell me your name:&quot;);
-read(0, &amp;buf, 0xAu);</code></pre><p>   puts(“leave your message please:”);</p>
-<pre><code>fgets(&amp;s, 100, stdin);
-printf(&quot;hello %s&quot;, &amp;buf);
-puts(&quot;your message is:&quot;);</code></pre><p>   printf(&amp;s);</p>
-<pre><code>if ( pwnme == 8 )
-{
-  puts(&quot;you pwned me, here is your flag:\n&quot;);
-  system(&quot;cat flag&quot;);
-}
-else
-{
-  puts(&quot;ank you!&quot;);
-}
-return 0;</code></pre><p>  }</p>
+<li><p>XCTF CGfsb</p>
 </li>
 </ul>
-<hr>
+<p>查看为32位文件</p>
+<p>拖入IDA</p>
+<pre><code>int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  int buf; // [esp+1Eh] [ebp-7Eh]
+  int v5; // [esp+22h] [ebp-7Ah]
+  __int16 v6; // [esp+26h] [ebp-76h]
+  char s; // [esp+28h] [ebp-74h]
+  unsigned int v8; // [esp+8Ch] [ebp-10h]
+
+  v8 = __readgsdword(0x14u);
+  setbuf(stdin, 0);
+  setbuf(stdout, 0);
+  setbuf(stderr, 0);
+  buf = 0;
+  v5 = 0;
+   v6 = 0;
+  memset(&amp;s, 0, 0x64u);
+  puts(&quot;please tell me your name:&quot;);
+  read(0, &amp;buf, 0xAu);
+ puts(&quot;leave your message please:&quot;);
+  fgets(&amp;s, 100, stdin);
+  printf(&quot;hello %s&quot;, &amp;buf);
+  puts(&quot;your message is:&quot;);
+ printf(&amp;s);
+  if ( pwnme == 8 )
+  {
+    puts(&quot;you pwned me, here is your flag:\n&quot;);
+    system(&quot;cat flag&quot;);
+  }
+  else
+  {
+    puts(&quot;ank you!&quot;);
+  }
+  return 0;
+}</code></pre><hr>
 <p>我拿到题的思路：</p>
 <ul>
 <li>条件位pwn==8时输出flag</li>
