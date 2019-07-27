@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="格式化字符串漏洞基本原理 格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。">
+<meta name="description" content="分隔符~">
 <meta property="og:type" content="article">
 <meta property="og:title" content="格式化字符串漏洞">
 <meta property="og:url" content="http://yoursite.com/2019/07/27/格式化字符串漏洞/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="格式化字符串漏洞基本原理 格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。">
+<meta property="og:description" content="分隔符~">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://p3.ssl.qhimg.com/t0163bde2c444318577.png">
-<meta property="og:updated_time" content="2019-07-27T06:51:45.150Z">
+<meta property="og:updated_time" content="2019-07-27T08:39:29.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="格式化字符串漏洞">
-<meta name="twitter:description" content="格式化字符串漏洞基本原理 格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。">
+<meta name="twitter:description" content="分隔符~">
 <meta name="twitter:image" content="https://p3.ssl.qhimg.com/t0163bde2c444318577.png">
 
 
@@ -373,10 +373,12 @@
       
 
       
-        <h2 id="格式化字符串漏洞基本原理"><a href="#格式化字符串漏洞基本原理" class="headerlink" title="格式化字符串漏洞基本原理"></a>格式化字符串漏洞基本原理</h2><blockquote>
+        <p>分隔符<del>~</del></p>
+<a id="more"></a>
+<h2 id="格式化字符串漏洞基本原理"><a href="#格式化字符串漏洞基本原理" class="headerlink" title="格式化字符串漏洞基本原理"></a>格式化字符串漏洞基本原理</h2><blockquote>
 <p>格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。</p>
 </blockquote>
-<a id="more"></a>
+<!--more-->
 
 <hr>
 <p>printf()函数的一般形式为printf(“format”, 输出表列)，</p>
