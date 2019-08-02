@@ -83,14 +83,14 @@
 
 <meta name="description" content="分隔符~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP弱类型">
-<meta property="og:url" content="http://yoursite.com/2019/05/25/PHP弱类型/index.html">
+<meta property="og:title" content="argparse模块">
+<meta property="og:url" content="http://yoursite.com/2019/08/02/argparse模块/index.html">
 <meta property="og:site_name" content="Myblog">
 <meta property="og:description" content="分隔符~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-27T08:38:24.546Z">
+<meta property="og:updated_time" content="2019-08-02T12:38:20.244Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP弱类型">
+<meta name="twitter:title" content="argparse模块">
 <meta name="twitter:description" content="分隔符~">
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/25/PHP弱类型/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/02/argparse模块/">
 
 
 
 
 
-  <title>PHP弱类型 | Myblog</title>
+  <title>argparse模块 | Myblog</title>
   
 
 
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/PHP弱类型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/02/argparse模块/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WD">
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP弱类型</h1>
+          <h1 class="post-title" itemprop="name headline">argparse模块</h1>
         
 
         <div class="post-meta">
@@ -333,8 +333,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-25T14:42:01+08:00">
-                2019-05-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-02T19:22:11+08:00">
+                2019-08-02
               </time>
             
 
@@ -373,42 +373,185 @@
       
         <p>分隔符<del>~</del></p>
 <a id="more"></a>
-<h2 id="弱等于-“-”"><a href="#弱等于-“-”" class="headerlink" title="弱等于 “==”"></a>弱等于 “==”</h2><ol>
-<li>== 在进行比较的时候，会先将字符串类型转化成相同，再比较。<blockquote>
-<p>如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行</p>
-</blockquote>
-<!--more-->
-例如：<blockquote>
-<p>&lt;?php<br>var_dump(“admin”==0);  //true</p>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>var_dump(“1admin”==1); //true</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“admin1”==1) //false</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“admin1”==0) //true</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“0e123456”==”0e4456789”); //true </p>
-</blockquote>
-<blockquote>
-<p>?&gt; </p>
-</blockquote>
-<ul>
-<li>1 观察上述代码，”admin”==0 比较的时候，会将admin转化成数值，强制转化,由于admin是字符串，转化的结果是0自然和0相等</li>
-<li>2 “1admin”==1 比较的时候会将1admin转化成数值,结果为1，而“admin1“==1 却等于错误，也就是”admin1”被转化成了0,为什么呢？</li>
-</ul>
-<blockquote>
-<ul>
-<li>3 “0e123456”==”0e456789”相互比较的时候，会将0e这类字符串识别为科学技术法的数字，0的无论多少次方都是零，所以相等</li>
-</ul>
-</blockquote>
+
 <hr>
-<p>所以，当一个字符串欸当作一个数值来取值，其结果和类型如下:如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0。</p>
+<blockquote>
+<h2 id="1-Argparse的作用"><a href="#1-Argparse的作用" class="headerlink" title="1.Argparse的作用"></a>1.Argparse的作用</h2></blockquote>
+<pre><code>举一个小例子，在Linux系统中，我们常用到 ls 这个命令，默认情况下 ls 会显
+
+示当前目录的所有文件或文件夹名称，但是当我们想要获得更多信息，如文件的权限、建
+
+立时间等，就需要在 ls 命令后加上 -all 或其他被允许的指令，因此对 ls 这个命令
+
+而言，假设我们想改变程序的行为，显示每个文件的更多信息，而不是只显示文件名。 在
+
+这种情况下，-all 被称为可选参数。同样的， ls 还具有 -h 这个可以选择的参数，这
+
+表示打开帮助文本。 这非常有用，你可以遇到一个你以前从未使用过的程序，并且可以简
+
+单地通过阅读帮助文本来弄清楚它是如何工作的。
+
+Argparse的作用就是为py文件封装好可以选择的参数，使他们更加灵活，丰富。</code></pre><blockquote>
+<h2 id="2-Argparse的基础"><a href="#2-Argparse的基础" class="headerlink" title="2.Argparse的基础"></a>2.Argparse的基础</h2></blockquote>
+<p>　　下面介绍argparse的基础调用。把下面的代码写入，保存为prog.py</p>
+<pre><code>import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.parse_args()</code></pre><p>　　OK,调用python3，运行一下试试：</p>
+<pre><code>$ python3 prog.py#第一个命令直接运行脚本程序，没有任何输出，因为该脚本并没有运行任何选项，源程序也没有设置默认，所以不会有参数传出。
+
+$ python3 prog.py --help#第二个命令使用--help参数的时候没有报错，系统给出了结果，那是系统默认的帮助信息。
+
+usage: prog.py [-h]
+optional arguments:
+  -h, --help  show this help message and exit
+
+$ python3 prog.py --verbose#很明显，最后两次使用都报错了，因为该脚本内并没有写入verbose和foo。
+
+usage: prog.py [-h]
+prog.py: error: unrecognized arguments: --verbose
+
+$ python3 prog.py foo
+usage: prog.py [-h]
+prog.py: error: unrecognized arguments: foo</code></pre><blockquote>
+<h2 id="给Argparse加上参数"><a href="#给Argparse加上参数" class="headerlink" title="给Argparse加上参数"></a>给Argparse加上参数</h2></blockquote>
+<p>　　同样的，写上一段python代码，保存为prog.py供之后调用：</p>
+<pre><code>import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument(&quot;echo&quot;)
+
+args = parser.parse_args()
+
+print(args.echo)</code></pre><p>　　运行结果如下：</p>
+<pre><code>$ python3 prog.py
+
+usage: prog.py [-h] echo
+
+prog.py: error: the following arguments are required: echo
+
+$ python3 prog.py --help
+
+usage: prog.py [-h] echo
+
+
+positional arguments:
+
+  echo
+
+optional arguments:
+
+  -h, --help  show this help message and exit
+
+
+$ python3 prog.py foo
+
+foo</code></pre><p>　　添加了add_argument（）后，这是我们用来指定程序可以接受的命令行选项。 此时我已经命名 echo (linux中的输出命令)，所以当调用时，要求我们指定一个选项。parse_args（）方法实际上从指定的选项中返回一些数据，此时是echo。argparse可以直接执行（即不需要指定哪个存储后的变量）。 它的名字和指定的字符串参数 echo 相匹配。</p>
+<hr>
+<p>parameter就相当于java里的”形参”:</p>
+<p>方法/函数定义时在括号里的参数</p>
+<pre><code>def explain_param_vs_arg(param1, param2):
+    print param1, param2 </code></pre><p>argument就是所谓”实参”:<br>调用方法/函数时括号里的参数</p>
+<pre><code>explain_param_vs_arg(&quot;arg1&quot;, &quot;arg2&quot;)</code></pre><hr>
+<p>例子:</p>
+<pre><code>import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&quot;echo&quot;)
+args = parser.parse_args()
+print args.echo</code></pre><p>输出:</p>
+<pre><code>$ python prog.py
+usage: prog.py [-h] echo
+prog.py: error: the following arguments are required: echo
+
+$ python prog.py --help
+usage: prog.py [-h] echo
+
+positional arguments: 
+  echo
+optional arguments: 
+  -h, --help show this help message and exit
+
+$ python prog.py foo
+foo</code></pre><p>上面的例子,基本没什么用. 来个有用点的:</p>
+<pre><code>import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&quot;echo&quot;, help=&quot;echo the string you use here&quot;)
+args = parser.parse_args()
+print args.echo</code></pre><p>输出:</p>
+<pre><code>$ python prog.py -h
+usage: prog.py [-h] echo
+
+positional arguments:
+   echo     echo the string you use here
+
+optional arguments:
+ -h, --help       show this help message and exit</code></pre><p>加了help参数之后, -h就加了对echo这个参数的说明.<br>来个更有用点的:</p>
+<pre><code>import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&quot;square&quot;, help=&quot;display a square of a given number&quot;)
+args = parser.parse_args()
+print args.square**2</code></pre><p>输出:</p>
+<pre><code>$ python prog.py 4
+Traceback (most recent call last):
+ File &quot;prog.py&quot;, line 5, in &lt;module&gt;
+   print args.square**2
+TypeError: unsupported operand type(s) for ** or pow(): &apos;str&apos; and &apos;int&apos;</code></pre><p>结果不太理想. 是因为argparse把我们给的参数认成了string. 我们得告诉TA把square当成int来处理:</p>
+<pre><code>import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&quot;square&quot;, help=&quot;display a square of a given number&quot;,type=int)
+
+args = parser.parse_args()
+print args.square**2</code></pre><p>运行结果:</p>
+<pre><code>$ python prog.py 4
+16
+$ python prog.py four
+usage: prog.py [-h] square
+prog.py: error: argument square: invalid int value: &apos;four&apos;</code></pre><p>这把就对了. 如果参数非法了还会报错.</p>
+<h2 id="Optional-arguments"><a href="#Optional-arguments" class="headerlink" title="Optional arguments"></a>Optional arguments</h2><p>前面介绍了positional arguments. 接下来我们看看optional arguments:</p>
+<pre><code>import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&quot;--verbosity&quot;, help=&quot;increase output verbosity&quot;)
+args = parser.parse_args()
+if args.verbosity:
+  print &quot;verbosity turned on&quot;</code></pre><p>输出:</p>
+<pre><code>$ python prog.py --verbosity 1
+verbosity turned on
+$ python prog.py
+$ python prog.py --help
+usage: prog.py [-h] [--verbosity VERBOSITY]
+
+optional arguments:
+ -h, --help                      show this help message and exit
+ --verbosity VERBOSITY
+                                 increase output verbosity
+$ python prog.py --verbosity
+usage: prog.py [-h] [--verbosity VERBOSITY]
+prog.py: error: argument --verbosity: expected one argument</code></pre><p>看看都发生了什么:</p>
+<p>这段代码是想在–verbosity被赋值的时候显示点什么, 没被赋值的时候什么都不显示.<br>所谓optional arguments, 取意译就是”选择性参数”. 我们可以看到当不使用–verbosity的时候是不会报错的. args.verbosity的值也是None<br>help信息也显示有点不一样. 加了[–verbosity VERSOSITY].<br>当我们使用–verbosity的时候, 就要给TA赋个值, 否则会报错.</p>
+<p>上面的例子可以接受任意的整数作为–verbosity的值, 但对我们这简单的小程序来说, 只有俩个值是有用的, True或者False. 我们改一下:</p>
+<pre><code>import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(&quot;--verbose&quot;, help=&quot;increase output verbosity&quot;,
+                    action=&quot;store_true&quot;)
+args = parser.parse_args()
+if args.verbose:
+    print &quot;verbosity turned on&quot;</code></pre><p>输出:</p>
+<pre><code>$ python prog.py --verbose
+verbosity turned on
+$ python prog.py --verbose 1
+usage: prog.py [-h] [--verbose]
+prog.py: error: unrecognized arguments: 1
+$ python prog.py --help
+usage: prog.py [-h] [--verbose]
+
+optional arguments: 
+-h, --help      show this help message and exit 
+--verbose       increase output verbosity</code></pre><p>说明:</p>
+<p>这个选项现在不止是一个需要赋值的flag. 我们甚至给TA改了个名字.  我们还新指定了一个关键字, action. 同时吧TA赋值成”store_true”. 这么做的意思是, 如果使用verbose, 就把True赋值给args.verbose. 如果不使用, 就给TA赋False.<br>注意help text也发生了变化.</p>
+<hr>
+<p>参考：<a href="https://www.jianshu.com/p/a50aead61319" target="_blank" rel="noopener">https://www.jianshu.com/p/a50aead61319</a></p>
 
       
     </div>
@@ -433,8 +576,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/24/-GET与-POST/" rel="next" title="-GET与-POST">
-                <i class="fa fa-chevron-left"></i> -GET与-POST
+              <a href="/2019/07/29/正则匹配/" rel="next" title="正则匹配">
+                <i class="fa fa-chevron-left"></i> 正则匹配
               </a>
             
           </div>
@@ -442,10 +585,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/03/redhat中DNS服务器配置/" rel="prev" title="redhat中DNS服务器配置">
-                redhat中DNS服务器配置 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -568,7 +707,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#弱等于-“-”"><span class="nav-number">1.</span> <span class="nav-text">弱等于 “==”</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Argparse的作用"><span class="nav-number">1.</span> <span class="nav-text">1.Argparse的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Argparse的基础"><span class="nav-number">2.</span> <span class="nav-text">2.Argparse的基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给Argparse加上参数"><span class="nav-number">3.</span> <span class="nav-text">给Argparse加上参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optional-arguments"><span class="nav-number">4.</span> <span class="nav-text">Optional arguments</span></a></li></ol></div>
             
 
           </div>

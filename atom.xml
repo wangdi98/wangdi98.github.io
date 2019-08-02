@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-27T08:34:19.068Z</updated>
+  <updated>2019-08-02T12:38:20.244Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>argparse模块</title>
+    <link href="http://yoursite.com/2019/08/02/argparse%E6%A8%A1%E5%9D%97/"/>
+    <id>http://yoursite.com/2019/08/02/argparse模块/</id>
+    <published>2019-08-02T11:22:11.188Z</published>
+    <updated>2019-08-02T12:38:20.244Z</updated>
+    
+    <content type="html"><![CDATA[<p>分隔符<del>~</del></p><a id="more"></a><hr><blockquote><h2 id="1-Argparse的作用"><a href="#1-Argparse的作用" class="headerlink" title="1.Argparse的作用"></a>1.Argparse的作用</h2></blockquote><pre><code>举一个小例子，在Linux系统中，我们常用到 ls 这个命令，默认情况下 ls 会显示当前目录的所有文件或文件夹名称，但是当我们想要获得更多信息，如文件的权限、建立时间等，就需要在 ls 命令后加上 -all 或其他被允许的指令，因此对 ls 这个命令而言，假设我们想改变程序的行为，显示每个文件的更多信息，而不是只显示文件名。 在这种情况下，-all 被称为可选参数。同样的， ls 还具有 -h 这个可以选择的参数，这表示打开帮助文本。 这非常有用，你可以遇到一个你以前从未使用过的程序，并且可以简单地通过阅读帮助文本来弄清楚它是如何工作的。Argparse的作用就是为py文件封装好可以选择的参数，使他们更加灵活，丰富。</code></pre><blockquote><h2 id="2-Argparse的基础"><a href="#2-Argparse的基础" class="headerlink" title="2.Argparse的基础"></a>2.Argparse的基础</h2></blockquote><p>　　下面介绍argparse的基础调用。把下面的代码写入，保存为prog.py</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.parse_args()</code></pre><p>　　OK,调用python3，运行一下试试：</p><pre><code>$ python3 prog.py#第一个命令直接运行脚本程序，没有任何输出，因为该脚本并没有运行任何选项，源程序也没有设置默认，所以不会有参数传出。$ python3 prog.py --help#第二个命令使用--help参数的时候没有报错，系统给出了结果，那是系统默认的帮助信息。usage: prog.py [-h]optional arguments:  -h, --help  show this help message and exit$ python3 prog.py --verbose#很明显，最后两次使用都报错了，因为该脚本内并没有写入verbose和foo。usage: prog.py [-h]prog.py: error: unrecognized arguments: --verbose$ python3 prog.py foousage: prog.py [-h]prog.py: error: unrecognized arguments: foo</code></pre><blockquote><h2 id="给Argparse加上参数"><a href="#给Argparse加上参数" class="headerlink" title="给Argparse加上参数"></a>给Argparse加上参数</h2></blockquote><p>　　同样的，写上一段python代码，保存为prog.py供之后调用：</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;echo&quot;)args = parser.parse_args()print(args.echo)</code></pre><p>　　运行结果如下：</p><pre><code>$ python3 prog.pyusage: prog.py [-h] echoprog.py: error: the following arguments are required: echo$ python3 prog.py --helpusage: prog.py [-h] echopositional arguments:  echooptional arguments:  -h, --help  show this help message and exit$ python3 prog.py foofoo</code></pre><p>　　添加了add_argument（）后，这是我们用来指定程序可以接受的命令行选项。 此时我已经命名 echo (linux中的输出命令)，所以当调用时，要求我们指定一个选项。parse_args（）方法实际上从指定的选项中返回一些数据，此时是echo。argparse可以直接执行（即不需要指定哪个存储后的变量）。 它的名字和指定的字符串参数 echo 相匹配。</p><hr><p>parameter就相当于java里的”形参”:</p><p>方法/函数定义时在括号里的参数</p><pre><code>def explain_param_vs_arg(param1, param2):    print param1, param2 </code></pre><p>argument就是所谓”实参”:<br>调用方法/函数时括号里的参数</p><pre><code>explain_param_vs_arg(&quot;arg1&quot;, &quot;arg2&quot;)</code></pre><hr><p>例子:</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;echo&quot;)args = parser.parse_args()print args.echo</code></pre><p>输出:</p><pre><code>$ python prog.pyusage: prog.py [-h] echoprog.py: error: the following arguments are required: echo$ python prog.py --helpusage: prog.py [-h] echopositional arguments:   echooptional arguments:   -h, --help show this help message and exit$ python prog.py foofoo</code></pre><p>上面的例子,基本没什么用. 来个有用点的:</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;echo&quot;, help=&quot;echo the string you use here&quot;)args = parser.parse_args()print args.echo</code></pre><p>输出:</p><pre><code>$ python prog.py -husage: prog.py [-h] echopositional arguments:   echo     echo the string you use hereoptional arguments: -h, --help       show this help message and exit</code></pre><p>加了help参数之后, -h就加了对echo这个参数的说明.<br>来个更有用点的:</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;square&quot;, help=&quot;display a square of a given number&quot;)args = parser.parse_args()print args.square**2</code></pre><p>输出:</p><pre><code>$ python prog.py 4Traceback (most recent call last): File &quot;prog.py&quot;, line 5, in &lt;module&gt;   print args.square**2TypeError: unsupported operand type(s) for ** or pow(): &apos;str&apos; and &apos;int&apos;</code></pre><p>结果不太理想. 是因为argparse把我们给的参数认成了string. 我们得告诉TA把square当成int来处理:</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;square&quot;, help=&quot;display a square of a given number&quot;,type=int)args = parser.parse_args()print args.square**2</code></pre><p>运行结果:</p><pre><code>$ python prog.py 416$ python prog.py fourusage: prog.py [-h] squareprog.py: error: argument square: invalid int value: &apos;four&apos;</code></pre><p>这把就对了. 如果参数非法了还会报错.</p><h2 id="Optional-arguments"><a href="#Optional-arguments" class="headerlink" title="Optional arguments"></a>Optional arguments</h2><p>前面介绍了positional arguments. 接下来我们看看optional arguments:</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;--verbosity&quot;, help=&quot;increase output verbosity&quot;)args = parser.parse_args()if args.verbosity:  print &quot;verbosity turned on&quot;</code></pre><p>输出:</p><pre><code>$ python prog.py --verbosity 1verbosity turned on$ python prog.py$ python prog.py --helpusage: prog.py [-h] [--verbosity VERBOSITY]optional arguments: -h, --help                      show this help message and exit --verbosity VERBOSITY                                 increase output verbosity$ python prog.py --verbosityusage: prog.py [-h] [--verbosity VERBOSITY]prog.py: error: argument --verbosity: expected one argument</code></pre><p>看看都发生了什么:</p><p>这段代码是想在–verbosity被赋值的时候显示点什么, 没被赋值的时候什么都不显示.<br>所谓optional arguments, 取意译就是”选择性参数”. 我们可以看到当不使用–verbosity的时候是不会报错的. args.verbosity的值也是None<br>help信息也显示有点不一样. 加了[–verbosity VERSOSITY].<br>当我们使用–verbosity的时候, 就要给TA赋个值, 否则会报错.</p><p>上面的例子可以接受任意的整数作为–verbosity的值, 但对我们这简单的小程序来说, 只有俩个值是有用的, True或者False. 我们改一下:</p><pre><code>import argparseparser = argparse.ArgumentParser()parser.add_argument(&quot;--verbose&quot;, help=&quot;increase output verbosity&quot;,                    action=&quot;store_true&quot;)args = parser.parse_args()if args.verbose:    print &quot;verbosity turned on&quot;</code></pre><p>输出:</p><pre><code>$ python prog.py --verboseverbosity turned on$ python prog.py --verbose 1usage: prog.py [-h] [--verbose]prog.py: error: unrecognized arguments: 1$ python prog.py --helpusage: prog.py [-h] [--verbose]optional arguments: -h, --help      show this help message and exit --verbose       increase output verbosity</code></pre><p>说明:</p><p>这个选项现在不止是一个需要赋值的flag. 我们甚至给TA改了个名字.  我们还新指定了一个关键字, action. 同时吧TA赋值成”store_true”. 这么做的意思是, 如果使用verbose, 就把True赋值给args.verbose. 如果不使用, 就给TA赋False.<br>注意help text也发生了变化.</p><hr><p>参考：<a href="https://www.jianshu.com/p/a50aead61319" target="_blank" rel="noopener">https://www.jianshu.com/p/a50aead61319</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;分隔符&lt;del&gt;~&lt;/del&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>正则匹配</title>
+    <link href="http://yoursite.com/2019/07/29/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D/"/>
+    <id>http://yoursite.com/2019/07/29/正则匹配/</id>
+    <published>2019-07-29T12:55:10.457Z</published>
+    <updated>2019-07-30T12:58:37.686Z</updated>
+    
+    <content type="html"><![CDATA[<p>分隔符~~</p><a id="more"></a><p>正则表达式：是一个特殊的字符序列，它能帮助你方便的检查一个字符串是否与某种模式匹配，定义了一种规则，匹配出所有符合这个规则的字符。</p><hr><blockquote><p>常见的正则匹配字符：</p></blockquote><blockquote><p>^：匹配一行字符串的开头</p></blockquote><blockquote><p>. ：    匹配任意字符，除了换行符</p></blockquote><blockquote><p>[…]：匹配括号中的任一个，[amk] 匹配 ‘a’，’m’或’k’</p></blockquote><blockquote><p>[^…]：    不在[]中的字符：[^abc] 匹配除了a,b,c之外的字符</p></blockquote><blockquote><p>*:匹配0个或多个的表达式</p></blockquote><blockquote><p>+:匹配1个或多个的表达式</p></blockquote><blockquote><p>?:匹配0个或1个由前面的正则表达式定义的片段，非贪婪方式</p></blockquote><blockquote><p>|：a| b，匹配a或b</p></blockquote><blockquote><p>{n}:精确匹配 n 个前面表达式。例如， o{2} 不能匹配 “Bob” 中的 “o”，但是能匹配 “food” 中的两个 o。</p></blockquote><blockquote><p>{n,}:匹配 n 个前面表达式。例如， o{2,} 不能匹配”Bob”中的”o”，但能匹配 “foooood”中的所有 o。”o{1,}” 等价于 “o+”。”o{0,}” 则等价于 “o*”。</p></blockquote><blockquote><p>{ n, m}:匹配 n 到 m 次由前面的正则表达式定义的片段，贪婪方式</p></blockquote><p>\w：匹配字母数字下划线</p><p>\W：匹配非字母数字下划线</p><p>\s：匹配任意空白字符</p><p>\S：匹配任意非空白字符</p><p>\d：    匹配任意数字，等价于 [0-9]</p><p>\D：匹配任意非数字</p><hr><h2 id="1-元字符"><a href="#1-元字符" class="headerlink" title="1.元字符"></a>1.元字符</h2><p>匹配有abc开头的字符串：</p><pre><code>\babc或者^abc</code></pre><p>匹配8位数字的QQ号码：</p><pre><code>^\d\d\d\d\d\d\d\d$</code></pre><p>匹配1开头11位数字的手机号码：</p><pre><code>^1\d\d\d\d\d\d\d\d\d\d$</code></pre><h2 id="2-重复限定符"><a href="#2-重复限定符" class="headerlink" title="2. 重复限定符"></a>2. 重复限定符</h2><p>匹配8位数字的QQ号码：</p><pre><code>^\d{8}$</code></pre><p>匹配1开头11位数字的手机号码：</p><pre><code>^1\d{10}$</code></pre><p>匹配银行卡号是14~18位的数字：</p><pre><code>^\d{14,18}$</code></pre><p>匹配以a开头的，0个或多个b结尾的字符串</p><pre><code>^ab*$</code></pre><h2 id="3-分组"><a href="#3-分组" class="headerlink" title="3. 分组"></a>3. 分组</h2><p>从上面的例子中看到，<em>限定符是作用在与他左边最近的一个字符，那么问题来了，如果我想要ab同时被</em>限定那怎么办呢？</p><p>正则表达式中用小括号()来做分组，也就是括号中的内容作为一个整体。<br>因此当我们要匹配多个ab时，我们可以这样<br>如：匹配字符串中包含0到多个ab开头：</p><pre><code>^(ab)*</code></pre><h2 id="5-条件或"><a href="#5-条件或" class="headerlink" title="5. 条件或"></a>5. 条件或</h2><p>回到我们刚才的手机号匹配，我们都知道：国内号码都来自三大网，它们都有属于自己的号段，比如联通有</p><p>130/131/132/155/156/185/186/145/176等号段，</p><p>假如让我们匹配一个联通的号码，那按照我们目前所学到的正则，应该无从下手的，因为这里包含了一些并列的条件，也就是“或”，那么在正则中是如何表示“或”的呢？</p><p>正则用符号 | 来表示或，也叫做分支条件，当满足正则里的分支条件的任何一种条件时，都会当成是匹配成功。<br>那么我们就可以用或条件来处理这个问题</p><pre><code>^(130|131|132|155|156|185|186|145|176)\d{8}$</code></pre><h2 id="6-区间"><a href="#6-区间" class="headerlink" title="6. 区间"></a>6. 区间</h2><p>正则提供一个元字符中括号 [] 来表示区间条件。</p><p>限定0到9 可以写成[0-9]</p><p>限定A-Z 写成[A-Z]</p><p>限定某些数字 [165]</p><p>那上面的正则我们还改成这样：</p><pre><code>^((13[0-2])|(15[56])|(18[5-6])|145|176)\d{8}$</code></pre><hr><h2 id="re库："><a href="#re库：" class="headerlink" title="re库："></a>re库：</h2><p>调用方法：import re</p><ul><li>1.re.match:</li></ul><p>从一个字符串的开始位置起匹配正则表达式，返回match对象。<br>如果不是起始位置匹配成功的话，match()               就返回none</p><p>pattern：正则表达式的字符串或原生字符串表示</p><p>string：待匹配字符串</p><p>flags：正则表达式使用时的控制标记</p><hr><p>re.match()函数：从字符串的起始位置匹配一个模式，</p><p>如果其实位置匹配不成功，返回none，不能继续向下匹配</p><p>如果匹配成功，以<strong>元组类型返回模式串的开始和结束位置</strong></p><p>更适合检验某个字符串</p><pre><code>print(type(re.match(&quot;www&quot;, &quot;www.baidu.com&quot;)))print(re.match(&quot;.*?&quot;, &quot;www.baidu.com&quot;))</code></pre><p>输出结果：</p><pre><code>&lt;class &apos;re.Match&apos;&gt;&lt;re.Match object; span=(0, 0), match=&apos;&apos;&gt;</code></pre><p>其中 span=(0, 0) 为获取的开始和结束位置 都是<strong>左闭右开</strong></p><pre><code>import reprint(re.match(&apos;xy*&apos;,&quot;xyyyyzs&quot;))print(re.match(&apos;xy*?&apos;,&quot;xyyyyzs&quot;))print(re.match(&apos;.*?&apos;,&quot;xyyyyzs&quot;))print(type(re.match(&apos;.*?&apos;,&quot;xyyyyzs&quot;)))print(type(re.match(&apos;.*&apos;,&quot;xyyyyzs&quot;)))</code></pre><p>结果：</p><pre><code>&lt;re.Match object; span=(0, 5), match=&apos;xyyyy&apos;&gt;&lt;re.Match object; span=(0, 1), match=&apos;x&apos;&gt;&lt;re.Match object; span=(0, 0), match=&apos;&apos;&gt;&lt;class &apos;re.Match&apos;&gt;&lt;class &apos;re.Match&apos;&gt;</code></pre><p>*为贪婪模式</p><p>？为非贪婪模式</p><p>可以发现当匹配的正则表达式为xy*的时候，匹配直到最后一个y。</p><p>当表达式为xy？的时候 *为匹配0次或n次所以只匹配x</p><hr><ul><li>2.re.search:</li></ul><p>扫描整个字符串并返回第一个成功的匹配。</p><p>span()：获取开始和结束位置;</p><p>string:获取匹配的内容</p><p>group():获取子表达式匹配的内容</p><pre><code>line = &quot;Cats are smarter than dogs&quot;matchObj = re.match(&apos;(.*?)are (.*) .*&apos;, line)if matchObj:    print(&quot;matchObj.group() : &quot;, matchObj.group())  #group()方法返回匹配成功的字符串    print(&quot;matchObj.group(1) : &quot;, matchObj.group(1))    # 返回第一个匹配的子分组，即为(.*)    print(&quot;matchObj.group(2) : &quot;, matchObj.group(2))    # 返回第二个匹配的子分组，即为(.*?)else:     print(&quot;No match!!&quot;)</code></pre><p>返回结果：</p><pre><code>matchObj.group() :  Cats are smarter than dogsmatchObj.group(1) :  Cats matchObj.group(2) :  smarter than</code></pre><hr><hr><pre><code>print(type(re.match(&apos;www&apos;, &apos;www.baidu.com&apos;).span()))print(re.match(&apos;www&apos;, &apos;www.baidu.com&apos;).string)print(re.match(&apos;www&apos;, &apos;www.baidu.com&apos;).span())</code></pre><hr><p>返回结果：</p><pre><code>&lt;class &apos;tuple&apos;&gt;www.baidu.com(0, 3)</code></pre><hr><ul><li>3.re.findall</li></ul><p>在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表</p><p>findall()方法以<strong>列表形式返回</strong>字符串中所有非重叠匹配的列表，</p><p>search方法只返回寻找到的第一个匹配，而findall方法返回所有非重叠的匹配，</p><pre><code>s = &apos;12 drumm44ers drumming, 11 ... 10 ...&apos;pattern = r&apos;\d+&apos;iter = re.findall(pattern, s)print(iter)for i in iter:    print(i)</code></pre><p>输出结果：</p><pre><code>[&apos;12&apos;, &apos;44&apos;, &apos;11&apos;, &apos;10&apos;]12441110</code></pre><hr><ul><li>3.re.sub(‘表达式’， ‘新字符’， ‘字符串’)</li></ul><p>用于替换字符串中的匹配项。</p><pre><code>sub(pattern，repl，string)方法，sub方法试图用参数repl替换与正则表达式pattern相匹配的子串r = &apos;\d+&apos;repl = &apos; &apos;  # 空格字符s = &apos;12d5fwef21s3fdsf21&apos;m = re.sub(r, repl, s)  # 字符串s符合正则r的字符将被repl代替print(m)n = re.subn(r, repl, s)  # subn方法与sub方法类似，只是在返回值中多了个匹配的数量，以元祖形式返回print(n)print(n[1])</code></pre><p>结果：</p><pre><code> d fwef s fdsf (&apos; d fwef s fdsf &apos;, 5)5</code></pre><p>结果貌似相连的数字看成一个数</p><hr><ul><li>4.re.split</li></ul><p>方法按照能够匹配的子串将字符串分割后返回列表，它的使用形式如下：</p><pre><code>s = &apos;1fwf5a5ef555ddf51ynut&apos;n = re.split(r&apos;\d+&apos;, s)print(filter(lambda x : x, n))print(n)n1 = re.split(r&apos;5&apos;, s)print(n1)text = &apos;ewfwef1ewfewf11111wegg11wg1&apos;s_text = re.split(&quot;1&quot;, text)print(s_text)</code></pre><p>结果：</p><pre><code>&lt;filter object at 0x000002494D750CF8&gt;[&apos;&apos;, &apos;fwf&apos;, &apos;a&apos;, &apos;ef&apos;, &apos;ddf&apos;, &apos;ynut&apos;][&apos;1fwf&apos;, &apos;a&apos;, &apos;ef&apos;, &apos;&apos;, &apos;&apos;, &apos;ddf&apos;, &apos;1ynut&apos;][&apos;ewfwef&apos;, &apos;ewfewf&apos;, &apos;&apos;, &apos;&apos;, &apos;&apos;, &apos;&apos;, &apos;wegg&apos;, &apos;&apos;, &apos;wg&apos;, &apos;&apos;]</code></pre><hr><ul><li>5.re.compile</li></ul><p>re.compile(pattern, flags=0) 这个方法是pattern类的工厂方法，目的是将正则表达式pattern编译成pattern对象，并返回该对象。</p><p>它可以把正则表达式编译成一个正则表达式对象。</p><p>我们可以把那些经常使用的正则表达式编译成正则表达式对象，这样可以提高一定的效率。</p><p>第二个参数flag是匹配模式，取值可以使用按位或运算符“|”表示同时生效，比如</p><p>re.I | re.M（忽略大小写，换行匹配）。</p><p>当然你也可以在regex字符串中指定模式，比如：</p><p>re.compile(‘pattern’, re.I | re.M)</p><p>它等价于： </p><p>re.compile(‘(?im)pattern’)，</p><p>例如：</p><pre><code> p=re.compile(&quot;\w+&quot;,re.I|re.M)p.match(&quot;sadf234&quot;).group()&apos;sadf234&apos; p=re.compile(&quot;(?im)\w+&quot;) p.match(&quot;sadf234&quot;).group()&apos;sadf234&apos;</code></pre><p>re模块提供了很多用于完成正则表达式的功能。</p><p>那为什么还有使用pattern实例的相应方法替代呢？ 使用该pattern模式唯一的好处就是，一处编译，多处复用。</p><pre><code>pattern = re.compile(r&apos;hello&apos;)pattern.match(&apos;hello world!&apos;)</code></pre><p>以上两句等价于</p><pre><code>re.match(r”hello”,”hello world!”)</code></pre><hr><h2 id="requests库"><a href="#requests库" class="headerlink" title="requests库"></a>requests库</h2><p>常见的两种请求方式：GET与POST：</p><p>区别：</p><p>GET参数通过URL传递，POST放在Request body中,</p><p>GET请求在URL中传送的参数是有长度限制的，而POST没有,</p><p>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留,    </p><p>GET和POST还有一个重大区别:简单的说：</p><p>GET产生一个TCP数据包；POST产生两个TCP数据包。</p><p>长的说：</p><p>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；</p><p>而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。</p><h2 id="requests库：设置参数"><a href="#requests库：设置参数" class="headerlink" title="requests库：设置参数"></a>requests库：设置参数</h2><p>参数：</p><p>get(url,params,headers,proxies,timeout,cookies)</p><p>post(url,data,headres,proxies,timeout,cookies)</p><p>参数设置：</p><p>url参数：指定需要请求的url</p><p>params/data参数：为请求的url设置参数</p><p>headers：设置请求头，伪造浏览器</p><p>proxies：设置代理</p><p>timeout：设置超时时间</p><p>cookies：设置cookies</p><p>代码：requests_demo.py</p><hr><p>注意：</p><p>1.为什么要设置代理呢？</p><p>个人理解：</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;分隔符~~&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>pwn_level3</title>
+    <link href="http://yoursite.com/2019/07/27/pwn-level3/"/>
+    <id>http://yoursite.com/2019/07/27/pwn-level3/</id>
+    <published>2019-07-27T08:50:21.000Z</published>
+    <updated>2019-07-27T08:50:21.471Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>pwntools常见函数</title>
@@ -312,60 +362,6 @@
     <updated>2019-07-27T08:37:33.885Z</updated>
     
     <content type="html"><![CDATA[<p>分隔符<del>~</del></p><a id="more"></a><p>在 PHP 中，预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。</p><!--more--><h2 id="GET-变量"><a href="#GET-变量" class="headerlink" title="$_GET 变量"></a>$_GET 变量</h2><p>预定义的 $_GET 变量用于收集来自 method=”get” 的表单中的值。</p><p>从带有 GET 方法的表单发送的信息，对任何人都是可见的（<strong>会显示在浏览器的地址栏</strong>），并且对发送信息的量也有限制。</p><ul><li>通过 $_GET 变量来收集表单数据</li></ul><blockquote><p>在 HTML 表单中使用 method=”get” 时，所有的变量名和值都会显示在 URL 中。</p></blockquote><blockquote><p>注释：所以在发送密码或其他敏感信息时，不应该使用这个方法！</p></blockquote><blockquote><p>然而，正因为变量显示在 URL 中，因此可以在收藏夹中收藏该页面。在某些情况下，这是很有用的。</p></blockquote><blockquote><p>注释：HTTP GET 方法不适合大型的变量值。它的值是不能超过 2000 个字符的。</p></blockquote><ul><li>在URL后直接写入要传入的参数的值如：<blockquote><p><a href="http://123.206.87.240:8002/get/" target="_blank" rel="noopener">http://123.206.87.240:8002/get/</a><br><a href="http://123.206.87.240:8002/get/?what=flag" target="_blank" rel="noopener">http://123.206.87.240:8002/get/?what=flag</a></p></blockquote></li></ul><p>得到:</p><p>$what=$_GET[‘what’]; </p><p>echo $what;</p><p>if($what==’flag’)</p><p>echo ‘flag{****}’;</p><p>flagflag{bugku_get_su8kej2en}</p><p>##$_POST##</p><ul><li>_POST传参时，直接抓包。在数据段直接输入要传入的参数的值</li><li>注意：在写入数据时要在前面添加<blockquote><p>Content-type: application/x-www-form-urlencode(或者其他）</p></blockquote></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;分隔符&lt;del&gt;~&lt;/del&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>redhat配置DHCP服务器</title>
-    <link href="http://yoursite.com/2019/05/23/redhat%E9%85%8D%E7%BD%AEDHCP%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/05/23/redhat配置DHCP服务器/</id>
-    <published>2019-05-23T12:54:00.086Z</published>
-    <updated>2019-07-27T08:38:53.682Z</updated>
-    
-    <content type="html"><![CDATA[<p>分隔符<del>~</del></p><a id="more"></a><p>1.由于虚拟机也提供了dhcp服务，因此用nat或host-only时会选用虚拟机的dhcp服务，因此要在虚拟网络编辑器中取消分配dhcp</p><!--more--><p>2.移除virbr0虚拟网卡；<br><a href="https://blog.csdn.net/csdn_immortal/article/details/81068259" target="_blank" rel="noopener">https://blog.csdn.net/csdn_immortal/article/details/81068259</a></p><p>3.配置静态ip，要与dhcp子网在同一网段；</p><pre><code>vi /etc/sysconfig/network-scripts/ifcfg-ethxxxx</code></pre><p>修改内容：</p><pre><code>BOOTPROTO=staticIPADDR=192.168.2.5GATEWAY=192.168.2.1</code></pre><p>4.配置dhcp</p><pre><code>vi /etc/dhcp/dhcpd.conf</code></pre><p>修改后内容如下：</p><pre><code>ddns-update-style interim;ignore client-updates;subnet 192.168.2.0 netmask 255.255.255.0 {# --- default gateway        option routers 192.168.2.1;        option subnet-mask 255.255.255.0;        range dynamic-bootp 192.168.2.50 192.168.2.60;        default-lease-time 21600;        max-lease-time 43200;}                                                                  </code></pre><p>5.开始用service dhcpd start启动dhcp，但出现Redirecting to /bin/systemctl start  dhcpd.service;</p><p>改用systemctl start dhcpd.service启动dhcp服务</p><p>用systemctl status dhcpd.service查看服务状态</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;分隔符&lt;del&gt;~&lt;/del&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>javac配置</title>
-    <link href="http://yoursite.com/2019/05/23/javac%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2019/05/23/javac配置/</id>
-    <published>2019-05-23T09:03:02.710Z</published>
-    <updated>2019-07-27T08:37:56.867Z</updated>
-    
-    <content type="html"><![CDATA[<p>分隔符<del>~</del></p><a id="more"></a><p> Windows7安装JDK的环境变量设置 Windows7 X64安装“jdk-6u26-windows-x64.exe”后，按照网上的环境变量设置方法设置了环境变量，但是死活都提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”。 </p><!--more--><hr><ul><li>第一步：安装jdk-6u26-windows-x64.exe，路径为默认路径，一直下一步直到完成安装。</li></ul><hr><ul><li>第二步：设置环境变量：</li></ul><ol><li>进入环境变量设置的方法，这里只针对Windows7，其它的请童鞋们上网查找：     “计算机”右键“属性”——“高级系统设置”——“高级”——“环境变量”打开环境变量设置窗口。</li><li>在下面的“系统环境变量”设置窗口中，点击“新建”，建立JAVA_HOME变量：<br>变量名：JAVA_HOME<br>变量值：C:\Program Files\Java\jdk1.6.0_26</li></ol><ol><li>在下面的“系统环境变量”设置窗口中，点击“新建”，建立CLASSPATH变量：<br>变量名：CLASSPATH<br>变量值：C:\Program Files\Java\jdk1.6.0_26\lib\dt.jar;C:\Program Files\Java\jdk1.6.0_26\lib\tools.jar; （注意分号）</li></ol><ol><li>在下面的“系统环境变量”设置窗口中，双击“PATH”变量，在变量值后添加：    ;C:\Program Files\Java\jdk1.6.0_26\bin; (注意分号)<br>第三步：在“运行”中输入cmd，回车后，打开命令窗口，输入javac，如果出现下图：那就说明安装配置都正确了。<img src="https://i.imgur.com/zjpvXuu.png" alt=""><br>如果出现下图：<img src="https://i.imgur.com/pBZxVad.png" alt=""><br>那很不幸，童鞋们还得继续努力，请接着往下看：<br> 安装jdk，设置好环境变量后，在cmd中输入javac命令无法使用，提示“javac不是内部命令或外部命令，也不是可运行的程序或批处理文件”  但是输入 java -version能正常显示jdk版本号，说明java命令可用。我输入Java -home后，发现指向的路径完全不对，环境变量设置没起作用，不知是何原因。</li></ol><hr><p>解决方案：<br>运行——&gt;cmd<br>在控制台中运行以下命令设置java环境变量即可解决：<br>set java_home=C:\Program Files\Java\jdk1.6.0_26<br>set classpath=%JAVA_HOME%\lib\tools.jar;%JAVA_HOME%\lib\dt.jar;<br>set path=%JAVA_HOME%\bin; </p><hr><p>注：输入不区分大小写，另外附上几个Java命令<br>java -help  可以查看命令<br>java -home  查看JDK安装路径<br>java -version  查看JDK版本</p><hr>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;分隔符&lt;del&gt;~&lt;/del&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>python头文件</title>
-    <link href="http://yoursite.com/2019/05/23/python%E5%A4%B4%E6%96%87%E4%BB%B6/"/>
-    <id>http://yoursite.com/2019/05/23/python头文件/</id>
-    <published>2019-05-23T06:14:22.930Z</published>
-    <updated>2019-07-27T08:38:47.411Z</updated>
-    
-    <content type="html"><![CDATA[<p>分隔符<del>~</del></p><a id="more"></a><p> <strong>python中的头文件</strong></p><ul><li>from math import sqrt</li></ul><p>是把sqrt作为本文件的方法导入进来了，使用的时候只需要直接调用sqrt。</p><!--more--><hr><ul><li>import math</li></ul><p>如果import是import math，那么调用的时候要采用<strong>math.</strong>sqrt的方式。<br>那么如果在自己的文件里定义了相同名字的函数怎么办呢？</p><pre><code>from math import sqrtdef sqrt(n):   return n print sqrt(13689) </code></pre><p>运行py文件输出13689，所以自己定义了函数会自动屏蔽掉。<br>所以大量引用import math.*是个比较好的办法，from math import *就容易出错了，当然用到很少的函数且次数较多时上面这种办法会比较合适。<br>另外python不支持像java那样import math.sqrt</p><hr>]]></content>
     
     <summary type="html">
     

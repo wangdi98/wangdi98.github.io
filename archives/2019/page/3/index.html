@@ -81,17 +81,13 @@
 
 
 
-<meta name="description" content="分隔符~">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PHP弱类型">
-<meta property="og:url" content="http://yoursite.com/2019/05/25/PHP弱类型/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Myblog">
+<meta property="og:url" content="http://yoursite.com/archives/2019/page/3/index.html">
 <meta property="og:site_name" content="Myblog">
-<meta property="og:description" content="分隔符~">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-27T08:38:24.546Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP弱类型">
-<meta name="twitter:description" content="分隔符~">
+<meta name="twitter:title" content="Myblog">
 
 
 
@@ -121,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/25/PHP弱类型/">
+  <link rel="canonical" href="http://yoursite.com/archives/2019/page/3/">
 
 
 
 
 
-  <title>PHP弱类型 | Myblog</title>
+  <title>归档 | Myblog</title>
   
 
 
@@ -146,7 +142,7 @@
     
   
 
-  <div class="container sidebar-position-right page-post-detail">
+  <div class="container sidebar-position-right page-archive">
     <div class="headband"></div>
     <a href="https://github.com/wangdi98/wangdi98.github.io.git"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -290,182 +286,146 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
 
-  
+      <span class="archive-page-counter">
+        
+        
+        
+          
+        
+        嗯..! 目前共计 23 篇日志。 继续努力。
+      </span>
 
-  
-  
-  
+      
+
+        
+        
+        
+
+        
+          
+          <div class="collection-title">
+            <h1 class="archive-year" id="archive-year-2019">2019</h1>
+          </div>
+        
+        
+
+        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/PHP弱类型/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WD">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Myblog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">PHP弱类型</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2019/05/23/redhat配置DHCP服务器/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">redhat配置DHCP服务器</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-25T14:42:01+08:00">
-                2019-05-25
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-05-23T20:54:00+08:00" content="2019-05-23">
+          05-23
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>分隔符<del>~</del></p>
-<a id="more"></a>
-<h2 id="弱等于-“-”"><a href="#弱等于-“-”" class="headerlink" title="弱等于 “==”"></a>弱等于 “==”</h2><ol>
-<li>== 在进行比较的时候，会先将字符串类型转化成相同，再比较。<blockquote>
-<p>如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换成数值并且比较按照数值来进行</p>
-</blockquote>
-<!--more-->
-例如：<blockquote>
-<p>&lt;?php<br>var_dump(“admin”==0);  //true</p>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>var_dump(“1admin”==1); //true</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“admin1”==1) //false</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“admin1”==0) //true</p>
-</blockquote>
-<blockquote>
-<p>var_dump(“0e123456”==”0e4456789”); //true </p>
-</blockquote>
-<blockquote>
-<p>?&gt; </p>
-</blockquote>
-<ul>
-<li>1 观察上述代码，”admin”==0 比较的时候，会将admin转化成数值，强制转化,由于admin是字符串，转化的结果是0自然和0相等</li>
-<li>2 “1admin”==1 比较的时候会将1admin转化成数值,结果为1，而“admin1“==1 却等于错误，也就是”admin1”被转化成了0,为什么呢？</li>
-</ul>
-<blockquote>
-<ul>
-<li>3 “0e123456”==”0e456789”相互比较的时候，会将0e这类字符串识别为科学技术法的数字，0的无论多少次方都是零，所以相等</li>
-</ul>
-</blockquote>
-<hr>
-<p>所以，当一个字符串欸当作一个数值来取值，其结果和类型如下:如果该字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值，该字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0。</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/05/24/-GET与-POST/" rel="next" title="-GET与-POST">
-                <i class="fa fa-chevron-left"></i> -GET与-POST
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/03/redhat中DNS服务器配置/" rel="prev" title="redhat中DNS服务器配置">
-                redhat中DNS服务器配置 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
       
+
+        
+        
+        
+
+        
+        
+
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2019/05/23/javac配置/" itemprop="url">
+              
+                <span itemprop="name">javac配置</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-05-23T17:03:02+08:00" content="2019-05-23">
+          05-23
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+      
+
+        
+        
+        
+
+        
+        
+
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2019/05/23/python头文件/" itemprop="url">
+              
+                <span itemprop="name">python头文件</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-05-23T14:14:22+08:00" content="2019-05-23">
+          05-23
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+      
+
     </div>
   </div>
+  
+  
+  
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/2019/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2019/">1</a><a class="page-number" href="/archives/2019/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+
 
 
           </div>
@@ -473,10 +433,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -497,17 +453,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -558,22 +505,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#弱等于-“-”"><span class="nav-number">1.</span> <span class="nav-text">弱等于 “==”</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -726,10 +657,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
